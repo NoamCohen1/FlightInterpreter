@@ -5,5 +5,6 @@
 #include "Minus.h"
 
 double Minus::calculate() {
+    int i = 0;
     return (this->left)->calculate() - (this->right)->calculate();
 }
