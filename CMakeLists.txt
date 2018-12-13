@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.12)
+project(interpreterFlight)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(interpreterFlight main.cpp FlightReader.cpp FlightReader.h Command.cpp Command.h Expression.cpp Expression.h Number.cpp Number.h BinaryExpression.cpp BinaryExpression.h Plus.cpp Plus.h Minus.cpp Minus.h Div.cpp Div.h Mul.cpp Mul.h)
