@@ -20,6 +20,8 @@ public:
     void lexer(string buffer);
 
     void parser(vector<string> info);
+
+    vector<string> openDataServerLexer(string line);
 };
 
 

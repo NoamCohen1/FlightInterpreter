@@ -7,7 +7,7 @@
 
 #include "BinaryExpression.h"
 
-class Plus : BinaryExpression {
+class Plus : public BinaryExpression {
 public:
     Plus(Expression *left, Expression *right) : BinaryExpression(left, right) {}
 

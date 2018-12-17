@@ -3,6 +3,9 @@
 //
 
 #include "FlightReader.h"
+#include <regex>
+
+
 
 void FlightReader::lexer(string buffer) {
     // split each line it get from the file to list of separate strings
@@ -18,13 +21,15 @@ void FlightReader::lexer(string buffer) {
 }
 
 void FlightReader::parser(vector<string> info) {
-    for (int i = 0; i < info.size(); ++i) {
-        map<string, Expression>::iterator iterator;
-        // find the command matches the string
-        for (iterator = this->commandsMap.begin(); iterator != this->commandsMap.end(); ++iterator) {
-            if (info[i] == (iterator->first)) {
+    Command *c = commandsMap.find(info[0])->second;
+    // erase the first element
+    info.erase(info.begin());
+    c->execute(info);
+}
 
-            }
-        }
-    }
+vector<string> FlightReader::openDataServerLexer(string line) {
+    regex lineFormat();
+    //([-+]?[0-9]\.?[0-9]+[\/\+\-\])+([-+]?[0-9]*\.?[0-9]+)
+    //("(\\+|-)?[[:digit:]]+")
+    //if(regex_match(input,integer))
 }

@@ -6,9 +6,15 @@
 #define INTERPRETERFLIGHT_COMMAND_H
 
 #include "Expression.h"
+#include "vector"
+#include "string.h"
+#include <iostream>
+using namespace std;
+
 
 class Command {
-
+public:
+    virtual int execute(vector<string> line) = 0;
 };
 
 
