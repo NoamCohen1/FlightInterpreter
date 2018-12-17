@@ -5,9 +5,33 @@
 #include "FlightReader.h"
 #include <regex>
 
+bool FlightReader::isOperator(char s){
+    if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"'){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
+void FlightReader::lexer(string line) {
+    string buffer = "";
+    string space = " ";
+    for (int i = 0; i < line.size(); ++i) {
+        //char s = line.at(i);
+        if (isOperator(line.at(i))) {
+            buffer += space + line.at(i);
+            if ((to_string(line.at(i + 1)) != space) && (i != (line.size() - 1))) {
+                buffer += space;
+            }
+        } else if (line.at(i) == ',') {
+            buffer += space;
+        } else {
+            buffer += line.at(i);
+        }
+    }
+    //cout << buffer << endl;
 
-void FlightReader::lexer(string buffer) {
     // split each line it get from the file to list of separate strings
     vector<string> info;
     size_t pos = 0;
@@ -20,11 +44,24 @@ void FlightReader::lexer(string buffer) {
     parser(info);
 }
 
+vector<string> FlightReader::uniteParam(vector<string> info) {
+    vector<string> params;
+    string param1;
+    for (int i = 0; i < info.size(); ++i) {
+        if ((info[i]) == "(") {
+            while((info[i]) != ")") {
+                params.push_back(param1);
+            }
+        }
+
+    }
+}
+
 void FlightReader::parser(vector<string> info) {
-    Command *c = commandsMap.find(info[0])->second;
+    //Command *c = commandsMap.find(info[0])->second;
     // erase the first element
     info.erase(info.begin());
-    c->execute(info);
+    //c->execute(info);
 }
 
 vector<string> FlightReader::openDataServerLexer(string line) {

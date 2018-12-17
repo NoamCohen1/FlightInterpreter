@@ -9,8 +9,11 @@
 #include "Expression.h"
 
 class ExpressionCommand : public Expression {
-    Command command;
+    Command *command;
 public:
+    ExpressionCommand(Command *command){
+        this->command = command;
+    }
     virtual double calculate();
 };
 

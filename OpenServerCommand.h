@@ -8,7 +8,16 @@
 #include "Command.h"
 #include "vector"
 #include "string"
-
+#include <unistd.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <pthread.h>
+#include <iostream>
+#include "InfixToPrefix.h"
 using namespace std;
 
 class OpenServerCommand : public Command {

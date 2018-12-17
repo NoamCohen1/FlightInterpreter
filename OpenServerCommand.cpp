@@ -4,9 +4,45 @@
 
 #include "OpenServerCommand.h"
 
-void OpenServerCommand::execute(vector<string> line) {
-    if (line.size()!= 2) {
+struct MyParams {
+    int port;
+    int sock;
+};
+
+void* thread_func(void* arg) {
+    struct MyParams* params = (struct MyParams*) arg;
+//    for (int i = 0; i < params->x; ++i)	{
+//        cout << params->y;
+//    }
+//    cout << endl;
+//    params.port = 0;
+//    params.sock = '@';
+//    return params;
+}
+
+int OpenServerCommand::execute(vector<string> line) {
+    if (line.size() != 2) {
         throw "The Number of Arguments is Not Correct";
     }
+    InfixToPrefix infToPre;
+    vector<string> strings;
+    vector<string> stringsConverted;
+    vector<Expression*> expressions;
+    for (int i = 0; i < line.size(); ++i) {
+        strings = infToPre.convertToStrings(line[i]);
+        stringsConverted = infToPre.convertFunc(strings);
+        Expression *e = infToPre.turnToExppression(stringsConverted);
+        expressions.push_back(e);
+    }
 
+    int socketPort = (int) expressions[0]->calculate();
+    int Hz = (int) expressions[1]->calculate();
+
+    struct MyParams *params = new MyParams();
+    params->port = socketPort;
+    params->sock = socket(AF_INET, SOCK_STREAM, 0);
+    pthread_t trid;
+    //pthread_start(&trid, nullptr, thread_func, params);
+    //pthread_join(&trid, &params);
 }
+

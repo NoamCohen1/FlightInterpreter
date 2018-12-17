@@ -9,13 +9,17 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <bits/stdc++.h>
 #include "Command.h"
 
 using namespace std;
 
 class FlightReader {
-    map<string, Expression> commandsMap;
+    //map<string, Expression> commandsMap;
 public:
+    bool isOperator(char s);
+
+    vector<string> uniteParam(vector<string> info);
 
     void lexer(string buffer);
 

@@ -6,6 +6,9 @@
 
 
 int main() {
+    FlightReader fr;
+    fr.lexer("openData (52*4),-83");
+
 //    ifstream ourFile;
 //    string buffer;
 //    FlightReader flightReader;
@@ -38,9 +41,9 @@ int main() {
 //    s.push_back("2");
 //    s.push_back(")");
 //    vector<string> g = sh.convertFunc(s);
-//    for (int i = 0; i < g.size(); ++i){
-//        //cout<<g[i];
-//    }
+////    for (int i = 0; i < g.size(); ++i){
+////        //cout<<g[i];
+////    }
 //    Expression*e = sh.turnToExppression(g);
 //    cout<<e->calculate()<<endl;
 

@@ -3,15 +3,6 @@
 //
 
 #include "InfixToPrefix.h"
-#include "Expression.h"
-#include <bits/stdc++.h>
-#include "Number.h"
-#include "Minus.h"
-#include "Mul.h"
-#include "Plus.h"
-#include "Div.h"
-using namespace std;
-
 
 int InfixToPrefix::getPriority(string str)
 {
@@ -123,4 +114,24 @@ bool InfixToPrefix::isOperator(string s){
     else{
         return false;
     }
+}
+
+vector<string> InfixToPrefix::convertToStrings(string str) {
+    vector<string> strings;
+    string num = "";
+    for (int i = 0; i < str.size(); ++i) {
+        if (!isOperator(to_string(str[i])) && !(to_string(str[i]) == "(") && !(to_string(str[i]) == ")")) {
+            num += str[i];
+        } else {
+            if (num != "") {
+                strings.push_back(num);
+                num = "";
+            }
+            strings.push_back(to_string(str[i]));
+        }
+    }
+    if (num != "") {
+        strings.push_back(num);
+    }
+    return strings;
 }

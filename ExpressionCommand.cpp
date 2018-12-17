@@ -3,3 +3,8 @@
 //
 
 #include "ExpressionCommand.h"
+
+
+double ExpressionCommand:: calculate(){
+    //c->execute();
+}
