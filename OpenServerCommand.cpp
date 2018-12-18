@@ -21,7 +21,7 @@ void* thread_func(void* arg) {
 }
 
 int OpenServerCommand::execute() {
-    if (line.size() != 2) {
+    if (line.size() != 3) {
         throw "The Number of Arguments is Not Correct";
     }
     InfixToPrefix infToPre;
@@ -35,8 +35,8 @@ int OpenServerCommand::execute() {
         expressions.push_back(e);
     }
 
-    int socketPort = (int) expressions[0]->calculate();
-    int Hz = (int) expressions[1]->calculate();
+    int socketPort = (int) expressions[1]->calculate();
+    int Hz = (int) expressions[2]->calculate();
 
     struct MyParams *params = new MyParams();
     params->port = socketPort;

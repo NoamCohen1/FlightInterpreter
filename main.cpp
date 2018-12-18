@@ -2,12 +2,17 @@
 #include <fstream>
 #include "FlightReader.h"
 #include "InfixToPrefix.h"
+#include "Sockets.h"
 #include <regex>
 
 
 int main() {
     FlightReader fr;
     fr.lexer("openDataServer (54 * 100) 10");
+
+//    Sockets* s = new Sockets();
+//    s->openFlightSocket("5400");
+
 
 //    ifstream ourFile;
 //    string buffer;

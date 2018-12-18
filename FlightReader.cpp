@@ -125,6 +125,10 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 += info[i];
                 ++i;
             }
+            if (howManyBrackets == 0){
+                params.push_back(param1);
+                param1 = "";
+            }
             continue;
         }
         if (info[i] == "\"") {
@@ -151,6 +155,7 @@ void FlightReader::parser(vector<string> info) {
         dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
         c->calculate();
     }
+    // check if it is var so we put it
 //    // erase the first element
 //    info.erase(info.begin());
 }
