@@ -22,8 +22,13 @@
 using namespace std;
 
 class ConnectCommand : public Command {
+    vector<string> line;
 public:
-    virtual int execute(vector<string> line);
+    virtual int execute();
+
+    virtual void setParameters(vector<string> line) {
+        this->line = line;
+    }
 
 };
 

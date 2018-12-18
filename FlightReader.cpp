@@ -19,6 +19,13 @@ void FlightReader::lexer(string line) {
     string space = " ";
     for (int i = 0; i < line.size(); ++i) {
         string s = to_string(line.at(i));
+        if (line.at(i) == '{') {
+            continue;
+        }
+        if (line.at(i) == '}') {
+            howManyBraces--;
+            continue;
+        }
         if (isOperator(line.at(i))) {
             if ((buffer[buffer.size() -1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
@@ -54,7 +61,21 @@ void FlightReader::lexer(string line) {
     info.push_back(buffer.substr(0, pos));
     vector<string> result;
     result = uniteParam(info);
-    parser(result);
+    if (result[0] == "while") {
+        this->inWhile = true;
+        howManyBraces++;
+    }
+    if (this->inWhile){
+        this->whileCommands.push_back(result);
+        if (howManyBraces == 0) {
+            LoopCommand lp(whileCommands);
+            lp.execute();
+            whileCommands.clear();
+            this->inWhile = false;
+        }
+    } else {
+        parser(result);
+    }
 }
 
 vector<string> FlightReader::uniteParam(vector<string> info) {
@@ -115,6 +136,8 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
             }
             param1 += info[i];
             ++i;
+            params.push_back(param1);
+            param1 = "";
             continue;
         }
         ++i;
@@ -123,15 +146,11 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
 }
 
 void FlightReader::parser(vector<string> info) {
-    //Command *c = commandsMap.find(info[0])->second;
-    // erase the first element
-    info.erase(info.begin());
-    //c->execute(info);
-}
-
-vector<string> FlightReader::openDataServerLexer(string line) {
-    regex lineFormat();
-    //([-+]?[0-9]\.?[0-9]+[\/\+\-\])+([-+]?[0-9]*\.?[0-9]+)
-    //("(\\+|-)?[[:digit:]]+")
-    //if(regex_match(input,integer))
+    if ((commandsMap.find(info[0])->second) != nullptr) {
+        Expression *c = commandsMap.find(info[0])->second;
+        dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
+        c->calculate();
+    }
+//    // erase the first element
+//    info.erase(info.begin());
 }

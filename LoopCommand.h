@@ -8,8 +8,15 @@
 #include "ConditionParser.h"
 
 class LoopCommand : public ConditionParser {
+    vector<vector<string>> commands;
 public:
-    virtual int execute(vector<string> line);
+    LoopCommand(vector<vector<string>> commands) {
+        this->commands = commands;
+    }
+
+    virtual int execute();
+
+    virtual void setParams(vector<string> line) {}
 };
 
 

@@ -14,7 +14,9 @@ using namespace std;
 
 class Command {
 public:
-    virtual int execute(vector<string> line) = 0;
+    virtual int execute() = 0;
+
+    virtual void setParams(vector<string> line) = 0;
 };
 
 

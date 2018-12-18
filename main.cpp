@@ -7,7 +7,7 @@
 
 int main() {
     FlightReader fr;
-    fr.lexer("var breaks\t= bind \"/controls/flight/throttle\"");
+    fr.lexer("openDataServer (54 * 100) 10");
 
 //    ifstream ourFile;
 //    string buffer;

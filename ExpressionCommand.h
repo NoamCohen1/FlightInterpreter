@@ -14,6 +14,11 @@ public:
     ExpressionCommand(Command *command){
         this->command = command;
     }
+
+    Command* getCommand () {
+        return this->command;
+    }
+
     virtual double calculate();
 };
 

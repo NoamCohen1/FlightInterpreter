@@ -20,9 +20,13 @@
 #include "Command.h"
 
 class OpenServerCommand : public Command {
+    vector<string> line;
 public:
-    virtual int execute(vector<string> line);
+    virtual int execute();
 
+    virtual void setParams(vector<string> line) {
+        this->line = line;
+    }
 };
 
 

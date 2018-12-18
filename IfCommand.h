@@ -8,9 +8,15 @@
 #include "ConditionParser.h"
 
 class IfCommand : public ConditionParser {
+    vector<vector<string>> commands;
 public:
-    virtual int execute(vector<string> line);
+    IfCommand(vector<vector<string>> commands) {
+        this->commands = commands;
+    }
 
+    virtual int execute();
+
+    virtual void setParams(vector<string> line) {}
 };
 
 

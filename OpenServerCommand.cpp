@@ -20,7 +20,7 @@ void* thread_func(void* arg) {
 //    return params;
 }
 
-int OpenServerCommand::execute(vector<string> line) {
+int OpenServerCommand::execute() {
     if (line.size() != 2) {
         throw "The Number of Arguments is Not Correct";
     }
@@ -42,7 +42,8 @@ int OpenServerCommand::execute(vector<string> line) {
     params->port = socketPort;
     params->sock = socket(AF_INET, SOCK_STREAM, 0);
     pthread_t trid;
-    //pthread_start(&trid, nullptr, thread_func, params);
+    //pthread_create(&trid, nullptr, thread_func, params);
     //pthread_join(&trid, &params);
+    return 0;
 }
 

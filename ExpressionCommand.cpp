@@ -5,6 +5,6 @@
 #include "ExpressionCommand.h"
 
 
-double ExpressionCommand:: calculate(){
-    //c->execute();
+double ExpressionCommand:: calculate() {
+    this->command->execute();
 }

@@ -4,7 +4,7 @@
 
 #include "IfCommand.h"
 
-int IfCommand::execute(vector<string> line) {
+int IfCommand::execute() {
 
     return 0;
 }

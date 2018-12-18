@@ -4,6 +4,6 @@
 
 #include "DefineVarCommand.h"
 
-int DefineVarCommand::execute(vector<string> line) {
+int DefineVarCommand::execute() {
 
 }

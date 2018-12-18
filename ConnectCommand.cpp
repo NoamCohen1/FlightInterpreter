@@ -4,6 +4,6 @@
 
 #include "ConnectCommand.h"
 
-int ConnectCommand::execute(vector<string> line) {
+int ConnectCommand::execute() {
 
 }

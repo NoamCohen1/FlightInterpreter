@@ -21,8 +21,13 @@
 
 class DefineVarCommand : public Command {
     map<string, double> varsMap;
+    vector<string> line;
 public:
-    virtual int execute(vector<string> line);
+    virtual int execute();
+
+    virtual void setParams(vector<string> line) {
+        this->line = line;
+    }
 
 };
 

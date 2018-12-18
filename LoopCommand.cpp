@@ -4,7 +4,7 @@
 
 #include "LoopCommand.h"
 
-int LoopCommand::execute(vector<string> line) {
+int LoopCommand::execute() {
 
     return 0;
 }

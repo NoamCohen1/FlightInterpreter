@@ -12,8 +12,9 @@
 class ConditionParser : public Command {
     map<string, Expression*> commandsMap;
 public:
-    virtual int execute(vector<string> line) = 0;
+    virtual int execute() = 0;
 
+    virtual void setParams(vector<string> line) = 0;
 };
 
 
