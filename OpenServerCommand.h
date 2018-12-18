@@ -19,8 +19,6 @@
 #include "InfixToPrefix.h"
 #include "Command.h"
 
-using namespace std;
-
 class OpenServerCommand : public Command {
 public:
     virtual int execute(vector<string> line);

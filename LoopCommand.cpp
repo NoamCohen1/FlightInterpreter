@@ -5,8 +5,6 @@
 #include "LoopCommand.h"
 
 int LoopCommand::execute(vector<string> line) {
-//    while(condition == true){
-//        for (c : )
-//        c.
-//    }
+
+    return 0;
 }

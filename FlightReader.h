@@ -15,7 +15,7 @@
 using namespace std;
 
 class FlightReader {
-    map<string, Expression*> commandsMap;
+    //map<string, Expression*> commandsMap;
 public:
     bool isOperator(char s);
 

@@ -6,12 +6,13 @@
 #define INTERPRETERFLIGHT_CONDITIONPARSER_H
 
 #include <map>
+#include <vector>
 #include "Command.h"
 
 class ConditionParser : public Command {
     map<string, Expression*> commandsMap;
 public:
-    virtual int execute(vector<string> line);
+    virtual int execute(vector<string> line) = 0;
 
 };
 

@@ -9,8 +9,8 @@
 #include "vector"
 #include "string.h"
 #include <iostream>
-using namespace std;
 
+using namespace std;
 
 class Command {
 public:

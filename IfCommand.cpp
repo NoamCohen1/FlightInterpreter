@@ -6,4 +6,5 @@
 
 int IfCommand::execute(vector<string> line) {
 
+    return 0;
 }
