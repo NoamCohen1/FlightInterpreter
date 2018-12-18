@@ -1,9 +1,9 @@
 //
-// Created by gal on 12/17/18.
+// Created by noam on 12/18/18.
 //
 
-#ifndef INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
-#define INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
+#ifndef INTERPRETERFLIGHT_CONNECTCOMMAND_H
+#define INTERPRETERFLIGHT_CONNECTCOMMAND_H
 
 #include "vector"
 #include "string"
@@ -21,11 +21,11 @@
 
 using namespace std;
 
-class OpenServerCommand : public Command {
+class ConnectCommand : public Command {
 public:
     virtual int execute(vector<string> line);
 
 };
 
 
-#endif //INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
+#endif //INTERPRETERFLIGHT_CONNECTCOMMAND_H

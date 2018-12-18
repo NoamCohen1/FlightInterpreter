@@ -18,23 +18,26 @@ void FlightReader::lexer(string line) {
     string buffer = "";
     string space = " ";
     for (int i = 0; i < line.size(); ++i) {
-        //char s = line.at(i);
+        string s = to_string(line.at(i));
         if (isOperator(line.at(i))) {
-            if (buffer[buffer.size() -1] != ' ') {
+            if ((buffer[buffer.size() -1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
             }
             buffer += line.at(i);
-            if ((to_string(line.at(i + 1)) != space) && (i != (line.size() - 1))) {
+            if ((i != (line.size() - 1)) && (line.at(i + 1) != ' ')) {
                 buffer += space;
             }
         } else if (line.at(i) == ',') {
-            if (buffer[buffer.size() -1] != ' ') {
+            if ((buffer[buffer.size() -1] != ' ') && (line.at(i + 1) != ' ')) {
                 buffer += space;
             }
             if (line.at(i + 1) == '-') {
                 buffer += '0';
             }
-        } else {
+        } else if (to_string(line.at(i)) == "9") {
+            buffer += space;
+        }
+        else {
             buffer += line.at(i);
         }
     }
@@ -73,7 +76,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 = "";
                 ++i;
                 continue;
-            } else if (info[i + 1] == "(") {
+            } else if ((info[i + 1] == "(") || (info[i + 1] == "\"")) {
                 param1 += info[i];
                 params.push_back(param1);
                 param1 = "";
@@ -84,7 +87,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 = "";
             }
         }
-        if (info[i] != "(") {
+        if ((info[i] != "(") && (info[i] != "\"")) {
             param1 += info[i];
         }
         if (info[i] == "(") {
@@ -101,6 +104,17 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 += info[i];
                 ++i;
             }
+            continue;
+        }
+        if (info[i] == "\"") {
+            param1 += info[i];
+            ++i;
+            while (info[i] != "\"") {
+                param1 += info[i];
+                ++i;
+            }
+            param1 += info[i];
+            ++i;
             continue;
         }
         ++i;

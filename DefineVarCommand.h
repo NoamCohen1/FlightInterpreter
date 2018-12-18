@@ -1,9 +1,9 @@
 //
-// Created by gal on 12/17/18.
+// Created by noam on 12/18/18.
 //
 
-#ifndef INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
-#define INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
+#ifndef INTERPRETERFLIGHT_DEFINEVARCOMMAND_H
+#define INTERPRETERFLIGHT_DEFINEVARCOMMAND_H
 
 #include "vector"
 #include "string"
@@ -19,13 +19,12 @@
 #include "InfixToPrefix.h"
 #include "Command.h"
 
-using namespace std;
-
-class OpenServerCommand : public Command {
+class DefineVarCommand : public Command {
+    map<string, double> varsMap;
 public:
     virtual int execute(vector<string> line);
 
 };
 
 
-#endif //INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
+#endif //INTERPRETERFLIGHT_DEFINEVARCOMMAND_H
