@@ -38,5 +38,6 @@ int OpenServerCommand::execute() {
     pthread_create(&trid, nullptr, serverS->openServerSocket, params);
     //pthread_join(&trid, &params);
     return 0;
+
 }
 
