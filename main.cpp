@@ -11,7 +11,7 @@ int main() {
     fr.lexer("openDataServer (54 * 100) 10");
 
 //    Sockets* s = new Sockets();
-//    s->openFlightSocket("5400");
+//    s->func("5400");
 
 
 //    ifstream ourFile;
@@ -27,7 +27,7 @@ int main() {
 //    }
 //    ourFile.close();
 //    return 0;
-//
+
 
 
 

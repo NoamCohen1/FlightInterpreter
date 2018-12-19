@@ -40,7 +40,9 @@ public:
     static void* getFlightSocket(void* arg);
     void* getClientSocket();
     void DataReader();
-};
+
+    int func( int argc, char *argv[] );
+    };
 
 
 #endif //INTERPRETERFLIGHT_SOCKETS_H

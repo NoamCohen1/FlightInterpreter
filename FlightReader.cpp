@@ -85,7 +85,15 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     int howManyBrackets = 0;
     while (i < info.size()) {
         if(!isOperator((info[i]).at(0))) {
-            if (i == (info.size() - 1)) {
+            if ((i == (info.size() - 1)) && (info[i - 1] == ")")) {
+                params.push_back(param1);
+                param1 = "";
+                param1 += info[i];
+                params.push_back(param1);
+                param1 = "";
+                ++i;
+                continue;
+            } else if (i == (info.size() - 1)) {
                 param1 += info[i];
                 params.push_back(param1);
                 param1 = "";
@@ -124,10 +132,6 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 }
                 param1 += info[i];
                 ++i;
-            }
-            if (howManyBrackets == 0){
-                params.push_back(param1);
-                param1 = "";
             }
             continue;
         }
