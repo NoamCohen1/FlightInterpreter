@@ -4,21 +4,10 @@
 
 #include "OpenServerCommand.h"
 
-struct MyParams {
-    int port;
-    int sock;
-};
-
-void* thread_func(void* arg) {
-    struct MyParams* params = (struct MyParams*) arg;
-//    for (int i = 0; i < params->x; ++i)	{
-//        cout << params->y;
-//    }
-//    cout << endl;
-//    params.port = 0;
-//    params.sock = '@';
-//    return params;
-}
+//void* OpenServerCommand::thread_func(void* arg) {
+//    Sockets* serverS;
+//    serverS->openServerSocket(arg);
+//}
 
 int OpenServerCommand::execute() {
     if (line.size() != 3) {
@@ -35,14 +24,18 @@ int OpenServerCommand::execute() {
         expressions.push_back(e);
     }
 
-    int socketPort = (int) expressions[1]->calculate();
-    int Hz = (int) expressions[2]->calculate();
+    int socketPort = (int) expressions[0]->calculate();
+    int Hz = (int) expressions[1]->calculate();
 
-    struct MyParams *params = new MyParams();
+    struct ServerParams *params = new ServerParams();
+
+    params->Hz = Hz;
     params->port = socketPort;
-    params->sock = socket(AF_INET, SOCK_STREAM, 0);
+    params->maps = maps;
+    Sockets* serverS;
+
     pthread_t trid;
-    pthread_create(&trid, nullptr, thread_func, params);
+    pthread_create(&trid, nullptr, serverS->openServerSocket, params);
     //pthread_join(&trid, &params);
     return 0;
 }

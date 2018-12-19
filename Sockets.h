@@ -16,15 +16,13 @@
 
 #include <sys/socket.h>
 #include <map>
-#include <netinet/in.h>
 #include <iostream>
-#include <unistd.h>
-#include <netinet/in.h>
 
-#include <string.h>
+#include <pthread.h>
 
 #include <sys/socket.h>
-#include <pthread.h>
+#include "Maps.h"
+
 using namespace std;
 
 class Sockets {
@@ -32,12 +30,11 @@ class Sockets {
     struct sockaddr_in clientSocket;
     map<string,string> varPlaces;
     int id;
-
 public:
     Sockets(){
-        this->planeSocket.sin_addr.s_addr=0;
-        this->planeSocket.sin_family=0;
-        this->planeSocket.sin_port=0;
+        this->planeSocket.sin_addr.s_addr = 0;
+        this->planeSocket.sin_family = 0;
+        this->planeSocket.sin_port = 0;
         for(int i=0;i<8;i++) {
             this->planeSocket.sin_zero[i] = 0;
         }
@@ -49,8 +46,10 @@ public:
     void* getClientSocket();
     void DataReader();
 
-    static void* func(void* arg);
-    void func1();
+    static void* openServerSocket(void* arg);
+    static void* openClientSocket(void* arg);
+    void* updateData(void *arg);
+        //void func1();
     };
 
 

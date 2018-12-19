@@ -8,9 +8,11 @@
 #include <map>
 #include <vector>
 #include "Command.h"
+#include "Maps.h"
 
 class ConditionParser : public Command {
-    map<string, Expression*> commandsMap;
+    Maps maps;
+    //map<string, Expression*> commandsMap;
 public:
     virtual int execute() = 0;
 

@@ -7,26 +7,29 @@
 
 #include "vector"
 #include "string"
-#include <unistd.h>
-#include <netdb.h>
-#include <stdio.h>
-#include <sys/socket.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#include <string.h>
 #include <pthread.h>
-#include <iostream>
 #include "InfixToPrefix.h"
 #include "Command.h"
+#include "Sockets.h"
+#include "Maps.h"
 
 using namespace std;
 
+struct ClientParams {
+    string ipAddress;
+    int port;
+    Maps maps;
+};
+
 class ConnectCommand : public Command {
+    Maps maps;
     vector<string> line;
 public:
     virtual int execute();
 
-    virtual void setParameters(vector<string> line) {
+    static void* thread_func(void* arg);
+
+    virtual void setParams(vector<string> line) {
         this->line = line;
     }
 

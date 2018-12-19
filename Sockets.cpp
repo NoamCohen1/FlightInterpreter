@@ -1,92 +1,14 @@
-//
-// Created by gal on 12/18/18.
-//
-
-//#include "Sockets.h"
-//
-//#include <iostream>
-//#include "Sockets.h"
-//
-////server
-//void Sockets::openFlightSocket(string s) {
-//    int sockfd, newsockfd, portno, clilen;
-//    // char buffer[256];
-//    struct sockaddr_in cli_addr;
-//    int n;
-//
-//    /* First call to socket() function */
-//    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-//    this->id=sockfd;
-//
-//    if (sockfd < 0) {
-//        perror("ERROR opening socket");
-//        exit(1);
-//    }
-//
-//    /* Initialize socket structure */
-//    bzero((char *) &this->planeSocket, sizeof(this->planeSocket));
-//    portno = atoi(s.c_str());
-//
-//    this->planeSocket.sin_family = AF_INET;
-//    this->planeSocket.sin_addr.s_addr = INADDR_ANY;
-//    this->planeSocket.sin_port = htons(portno);
-//
-//    /* Now bind the host address using bind() call.*/
-//    if (bind(sockfd, (struct sockaddr *) &this->planeSocket, sizeof(this->planeSocket)) < 0) {
-//        perror("ERROR on binding");
-//        exit(1);
-//    }
-//
-//    /* Now start listening for the clients, here process will
-//       * go in sleep mode and will wait for the incoming connection
-//    */
-//
-//    listen(sockfd,1);
-//    DataReader();
-//    /*clilen = sizeof(cli_addr);
-//
-//    // Accept actual connection from the client //
-//    newsockfd = accept(sockfd, (struct sockaddr )&cli_addr, (socklen_t)&clilen);
-//
-//    if (newsockfd < 0) {
-//        perror("ERROR on accept");
-//        exit(1);
-//    }
-//
-//*/
-//
-//
-//}
-//
-//void *Sockets::getFlightSocket(void *arg) {
-//
-//}
-//
-//void Sockets::DataReader() {
-//    std::cout<<"Waiting"<<endl;
-//    sockaddr_in client_sock;
-//    int client;
-//    int client_sock_fd=accept(id,(struct sockaddr*)&client_sock,(socklen_t*)&client);
-//    if(client_sock_fd<0){
-//
-//    }else {
-//        std::cout << "hii" << endl;
-//    }
-//}
-
-
-
-
-
 #include "Sockets.h"
+#include "OpenServerCommand.h"
+#include "ConnectCommand.h"
 
 
-void* Sockets::func(void* arg) {
-
+void *Sockets::openServerSocket(void *arg) {
+    struct ServerParams *params = (struct ServerParams *) arg;
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
-    int  n;
+    int n;
 
     /* First call to socket() function */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -98,7 +20,7 @@ void* Sockets::func(void* arg) {
 
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 5400;
+    portno = params->port;
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
@@ -114,34 +36,30 @@ void* Sockets::func(void* arg) {
        * go in sleep mode and will wait for the incoming connection
     */
 
-    listen(sockfd,5);
+    listen(sockfd, 5);
     clilen = sizeof(cli_addr);
 
     /* Accept actual connection from the client */
-    newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
+    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
 
     if (newsockfd < 0) {
         perror("ERROR on accept");
         exit(1);
     }
 
-    else {
-        cout << "hii" << endl;
-    }
-
     /* If connection is established then start communicating */
-    bzero(buffer,256);
-    n = read( newsockfd,buffer,255 );
+    bzero(buffer, 256);
+    n = read(newsockfd, buffer, 255);
 
     if (n < 0) {
         perror("ERROR reading from socket");
         exit(1);
     }
 
-    printf("Here is the message: %s\n",buffer);
+    printf("Here is the message: %s\n", buffer);
 
     /* Write a response to the client */
-    n = write(newsockfd,"I got your message",18);
+    n = write(newsockfd, "I got your message", 18);
 
     if (n < 0) {
         perror("ERROR writing to socket");
@@ -151,10 +69,90 @@ void* Sockets::func(void* arg) {
     return 0;
 }
 
-void Sockets::func1() {
 
-    pthread_t trid;
-    pthread_create(&trid, nullptr, func, nullptr);
+void *Sockets::openClientSocket(void *arg) {
+    struct ClientParams *params = (struct ClientParams *) arg;
+    int sockfd, portno;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+
+//    char buffer[256];
+
+//    if (argc < 3) {
+//        fprintf(stderr,"usage %s hostname port\n", argv[0]);
+//        exit(0);
+//    }
+
+    portno = params->port;
+
+    /* Create a socket point */
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    params->maps.setSockfd(sockfd);
+
+    if (sockfd < 0) {
+        perror("ERROR opening socket");
+        exit(1);
+    }
+
+    server = gethostbyname(params->ipAddress.c_str());
+
+    if (server == NULL) {
+        fprintf(stderr, "ERROR, no such host\n");
+        exit(0);
+    }
+
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *) server->h_addr, (char *) &serv_addr.sin_addr.s_addr, server->h_length);
+    serv_addr.sin_port = htons(portno);
+
+    /* Now connect to the server */
+    if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        perror("ERROR connecting");
+        exit(1);
+    }
 
 
+    return 0;
 }
+
+
+void *Sockets::updateData(void *arg) {
+    struct ClientParams *params = (struct ClientParams *) arg;
+    char buffer[256];
+    int n;
+    /* Now ask for a message from the user, this message
+       * will be read by server
+    */
+
+    printf("Please enter the message: ");
+    bzero(buffer, 256);
+    fgets(buffer, 255, stdin);
+
+    /* Send message to the server */
+    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
+
+    if (n < 0) {
+        perror("ERROR writing to socket");
+        exit(1);
+    }
+
+    /* Now read server response */
+    bzero(buffer, 256);
+    n = read(params->maps.getSockfd(), buffer, 255);
+
+    if (n < 0) {
+        perror("ERROR reading from socket");
+        exit(1);
+    }
+
+    printf("%s\n", buffer);
+}
+
+
+//void Sockets::func1() {
+//    pthread_t trid;
+//    pthread_create(&trid, nullptr, openServerSocket, nullptr);
+//
+//
+//}

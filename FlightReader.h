@@ -16,18 +16,27 @@
 #include "IfCommand.h"
 #include "ExpressionCommand.h"
 #include "OpenServerCommand.h"
+#include "ConnectCommand.h"
+#include "DefineVarCommand.h"
+#include "Maps.h"
 
 using namespace std;
 
 class FlightReader {
     map<string, Expression*> commandsMap;
+    Maps maps;
     vector<vector<string>> whileCommands;
     bool inWhile = false;
     int howManyBraces = 0;
+
 public:
     FlightReader() {
         this->commandsMap.insert(pair <string, Expression*> ("openDataServer",
-                new ExpressionCommand(new OpenServerCommand())));
+                                                             new ExpressionCommand(new OpenServerCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("connect",
+                                                             new ExpressionCommand(new ConnectCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("var",
+                                                             new ExpressionCommand(new DefineVarCommand())));
     }
 
     bool isOperator(char s);

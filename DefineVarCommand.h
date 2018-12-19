@@ -18,8 +18,10 @@
 #include <iostream>
 #include "InfixToPrefix.h"
 #include "Command.h"
+#include "Maps.h"
 
 class DefineVarCommand : public Command {
+    Maps maps;
     map<string, double> varsMap;
     vector<string> line;
 public:
