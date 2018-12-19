@@ -17,6 +17,14 @@
 #include <sys/socket.h>
 #include <map>
 #include <netinet/in.h>
+#include <iostream>
+#include <unistd.h>
+#include <netinet/in.h>
+
+#include <string.h>
+
+#include <sys/socket.h>
+#include <pthread.h>
 using namespace std;
 
 class Sockets {
@@ -41,7 +49,8 @@ public:
     void* getClientSocket();
     void DataReader();
 
-    int func( int argc, char *argv[] );
+    static void* func(void* arg);
+    void func1();
     };
 
 

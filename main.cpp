@@ -7,11 +7,14 @@
 
 
 int main() {
-    FlightReader fr;
-    fr.lexer("openDataServer (54 * 100) 10");
+//    FlightReader fr;
+//    fr.lexer("openDataServer (54 * 100) 10");
 
-//    Sockets* s = new Sockets();
-//    s->func("5400");
+    Sockets* s = new Sockets();
+    s->func1();
+
+    while(true){}
+    return 0;
 
 
 //    ifstream ourFile;

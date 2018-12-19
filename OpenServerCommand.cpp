@@ -28,7 +28,7 @@ int OpenServerCommand::execute() {
     vector<string> strings;
     vector<string> stringsConverted;
     vector<Expression*> expressions;
-    for (int i = 0; i < line.size(); ++i) {
+    for (int i = 1; i < line.size(); ++i) {
         strings = infToPre.convertToStrings(line[i]);
         stringsConverted = infToPre.convertFunc(strings);
         Expression *e = infToPre.turnToExppression(stringsConverted);
@@ -42,7 +42,7 @@ int OpenServerCommand::execute() {
     params->port = socketPort;
     params->sock = socket(AF_INET, SOCK_STREAM, 0);
     pthread_t trid;
-    //pthread_create(&trid, nullptr, thread_func, params);
+    pthread_create(&trid, nullptr, thread_func, params);
     //pthread_join(&trid, &params);
     return 0;
 }

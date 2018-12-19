@@ -78,15 +78,11 @@
 
 
 
-#include <unistd.h>
-#include <netinet/in.h>
-
-#include <string.h>
-
-#include <sys/socket.h>
 #include "Sockets.h"
 
-int Sockets::func( int argc, char *argv[] ) {
+
+void* Sockets::func(void* arg) {
+
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
@@ -102,7 +98,7 @@ int Sockets::func( int argc, char *argv[] ) {
 
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 5001;
+    portno = 5400;
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
@@ -129,6 +125,10 @@ int Sockets::func( int argc, char *argv[] ) {
         exit(1);
     }
 
+    else {
+        cout << "hii" << endl;
+    }
+
     /* If connection is established then start communicating */
     bzero(buffer,256);
     n = read( newsockfd,buffer,255 );
@@ -151,6 +151,10 @@ int Sockets::func( int argc, char *argv[] ) {
     return 0;
 }
 
+void Sockets::func1() {
+
+    pthread_t trid;
+    pthread_create(&trid, nullptr, func, nullptr);
 
 
-
+}
