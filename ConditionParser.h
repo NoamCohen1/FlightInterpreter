@@ -19,9 +19,10 @@ public:
 
     virtual void setParams(vector<string> line) = 0;
 
-    virtual bool checkCondition(vector<string> condition);
+    virtual bool checkCondition(string condition);
 
     bool isOperator(char s);
+
 };
 
 

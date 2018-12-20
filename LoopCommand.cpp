@@ -5,6 +5,20 @@
 #include "LoopCommand.h"
 
 int LoopCommand::execute() {
-
-    return 0;
+    while (checkCondition(this->commands[0][1])) {
+        for (int i = 0; i < this->commands.size(); ++i) {
+            Expression *c = commandsMap.find(this->commands[i][0])->second;
+            if (c == nullptr) {
+                string s = this->maps.getBindsMap().find(info[0])->second;
+                if (s != "") {
+                    Expression *c = commandsMap.find(info[1])->second;
+                    dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
+                    c->calculate();
+                }
+            } else {
+                dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
+                c->calculate();
+            }
+        }
+    }
 }

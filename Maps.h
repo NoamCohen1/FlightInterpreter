@@ -51,9 +51,14 @@ public:
     map<string, string> getBindsMap() {
         return bindsMap;
     }
+
     map<string, double> getVarsValuesMap() {
         return varsValuesMap;
     }
+
+    void updateVarsValuesMap(string s, double d);
+
+    void updateBindsMap(string var, string path);
 };
 
 

@@ -5,15 +5,15 @@
 #ifndef INTERPRETERFLIGHT_EQUALCOMMAND_H
 #define INTERPRETERFLIGHT_EQUALCOMMAND_H
 
-#include "vector"
-#include "string"
+#include <vector>
+#include <string>
+#include <string.h>
 #include <unistd.h>
 #include <netdb.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
-#include <string.h>
 #include <pthread.h>
 #include <iostream>
 #include "InfixToPrefix.h"
@@ -26,6 +26,8 @@ class EqualCommand : public Command {
     vector<string> line;
 public:
     virtual int execute();
+
+    void setValue(string newValue);
 
     virtual void setParams(vector<string> line) {
         this->line = line;

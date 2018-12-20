@@ -21,7 +21,7 @@ class SleepCommand : public Command {
 public:
     virtual int execute();
 
-    static void* thread_func(void* arg);
+    //static void* thread_func(void* arg);
 
     virtual void setParams(vector<string> line) {
         this->line = line;

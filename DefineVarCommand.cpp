@@ -13,6 +13,7 @@ int DefineVarCommand::execute() {
                 bind->setParams(this->line);
                 bind->execute();
             } else {
+                this->line.erase(this->line.begin());
                 equal->setParams(this->line);
                 equal->execute();
             }

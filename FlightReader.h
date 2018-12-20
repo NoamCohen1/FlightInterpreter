@@ -12,8 +12,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #include "Command.h"
-#include "LoopCommand.h"
-#include "IfCommand.h"
+#include "ConditionParser.h"
 #include "ExpressionCommand.h"
 #include "OpenServerCommand.h"
 #include "ConnectCommand.h"
@@ -28,7 +27,7 @@ using namespace std;
 class FlightReader {
     map<string, Expression*> commandsMap;
     Maps maps;
-    vector<vector<string>> whileCommands;
+    vector<vector<string>> ifOrWhileCommands;
     bool inWhile = false;
     int howManyBraces = 0;
 
@@ -46,6 +45,10 @@ public:
                                                              new ExpressionCommand(new PrintCommand())));
         this->commandsMap.insert(pair <string, Expression*> ("sleep",
                                                              new ExpressionCommand(new SleepCommand())));
+//        this->commandsMap.insert(pair <string, Expression*> ("while",
+//                                                             new ExpressionCommand(new ConditionParser())));
+//        this->commandsMap.insert(pair <string, Expression*> ("if",
+//                                                             new ExpressionCommand(new SleepCommand())));
     }
 
     bool isOperator(char s);
@@ -55,6 +58,9 @@ public:
     void lexer(string buffer);
 
     void parser(vector<string> info);
+
+//    void conditionInCondition(vector<vector<string>> commands);
+
 };
 
 

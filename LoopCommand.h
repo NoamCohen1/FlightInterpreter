@@ -17,6 +17,7 @@ public:
     virtual int execute();
 
     virtual void setParams(vector<string> line) {}
+
 };
 
 

@@ -5,11 +5,10 @@
 #include "FlightReader.h"
 #include <regex>
 
-bool FlightReader::isOperator(char s){
-    if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"'){
+bool FlightReader::isOperator(char s) {
+    if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"' || s == '=') {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
@@ -27,7 +26,7 @@ void FlightReader::lexer(string line) {
             continue;
         }
         if (isOperator(line.at(i))) {
-            if ((buffer[buffer.size() -1] != ' ') && (line.at(i - 1) != ' ')) {
+            if ((buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
             }
             buffer += line.at(i);
@@ -35,7 +34,7 @@ void FlightReader::lexer(string line) {
                 buffer += space;
             }
         } else if (line.at(i) == ',') {
-            if ((buffer[buffer.size() -1] != ' ') && (line.at(i + 1) != ' ')) {
+            if ((buffer[buffer.size() - 1] != ' ') && (line.at(i + 1) != ' ')) {
                 buffer += space;
             }
             if (line.at(i + 1) == '-') {
@@ -43,8 +42,7 @@ void FlightReader::lexer(string line) {
             }
         } else if (to_string(line.at(i)) == "9") {
             buffer += space;
-        }
-        else {
+        } else {
             buffer += line.at(i);
         }
     }
@@ -65,12 +63,12 @@ void FlightReader::lexer(string line) {
         this->inWhile = true;
         howManyBraces++;
     }
-    if (this->inWhile){
-        this->whileCommands.push_back(result);
+    if (this->inWhile) {
+        this->ifOrWhileCommands.push_back(result);
         if (howManyBraces == 0) {
-            LoopCommand lp(whileCommands);
-            lp.execute();
-            whileCommands.clear();
+//            ConditionParser *lp;
+            conditionInCondition(ifOrWhileCommands);
+            ifOrWhileCommands.clear();
             this->inWhile = false;
         }
     } else {
@@ -84,7 +82,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     int i = 0;
     int howManyBrackets = 0;
     while (i < info.size()) {
-        if(!isOperator((info[i]).at(0))) {
+        if (!isOperator((info[i]).at(0))) {
             if ((i == (info.size() - 1)) && (info[i - 1] == ")")) {
                 params.push_back(param1);
                 param1 = "";
@@ -116,6 +114,13 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 = "";
             }
         }
+        if (info[i] == "=") {
+            params.push_back(param1);
+            param1 = "";
+            params.push_back(info[i]);
+            ++i;
+            continue;
+        }
         if ((info[i] != "(") && (info[i] != "\"")) {
             param1 += info[i];
         }
@@ -136,13 +141,13 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
             continue;
         }
         if (info[i] == "\"") {
-            param1 += info[i];
+            //param1 += info[i];
             ++i;
             while (info[i] != "\"") {
                 param1 += info[i];
                 ++i;
             }
-            param1 += info[i];
+            //param1 += info[i];
             ++i;
             params.push_back(param1);
             param1 = "";
@@ -153,17 +158,41 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     return params;
 }
 
+//void FlightReader::conditionInCondition(vector<vector<string>> commands) {
+//    int howManyBraces = 0;
+//    for (int i = 0; i < commands.size(); ++i) {
+//        if (commands[i][0] == "while") {
+//
+//        }
+//    }
+//    if (result[0] == "while") {
+//        this->inWhile = true;
+//        howManyBraces++;
+//    }
+//    if (this->inWhile) {
+//        this->ifOrWhileCommands.push_back(result);
+//        if (howManyBraces == 0) {
+//            ConditionParser *lp;
+//            lp->conditionInCondition(ifOrWhileCommands);
+//            ifOrWhileCommands.clear();
+//            this->inWhile = false;
+//        }
+//    } else {
+//        parser(result);
+//    }
+//}
+
 void FlightReader::parser(vector<string> info) {
     Expression *c = commandsMap.find(info[0])->second;
     if (c == nullptr) {
         string s = this->maps.getBindsMap().find(info[0])->second;
         if (s != "") {
             Expression *c = commandsMap.find(info[1])->second;
-            dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
+            dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
             c->calculate();
         }
     } else {
-        dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
+        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
         c->calculate();
     }
 }

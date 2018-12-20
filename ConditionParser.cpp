@@ -13,7 +13,8 @@ bool ConditionParser::isOperator(char s){
     }
 }
 
-bool ConditionParser::checkCondition(vector<string> condition) {
+
+bool ConditionParser::checkCondition(string condition) {
     InfixToPrefix infToPre;
     vector<string> twoParts;
     bool sawCondition = false;
@@ -22,17 +23,17 @@ bool ConditionParser::checkCondition(vector<string> condition) {
     string theOperator = "";
     vector<string> stringsConverted;
     vector<Expression*> expressions;
-    for (int i = 0; i < condition[1].size(); ++i) {
-        if ((condition[1][i] == '(') || (condition[1][i] == ')')) {
+    for (int i = 0; i < condition.size(); ++i) {
+        if ((condition[i] == '(') || (condition[i] == ')')) {
             continue;
         }
-        if (isOperator(condition[1][i])) {
-            theOperator += condition[1][i];
+        if (isOperator(condition[i])) {
+            theOperator += condition[i];
             sawCondition = true;
-        } else if (!(isOperator(condition[1][i])) && !sawCondition) {
-            left += condition[1][i];
-        } else if (!(isOperator(condition[1][i])) && sawCondition) {
-            right += condition[1][i];
+        } else if (!(isOperator(condition[i])) && !sawCondition) {
+            left += condition[i];
+        } else if (!(isOperator(condition[i])) && sawCondition) {
+            right += condition[i];
         }
 
 

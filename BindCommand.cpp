@@ -5,5 +5,5 @@
 #include "BindCommand.h"
 
 int BindCommand::execute() {
-
+    this->maps.updateBindsMap(line[1], line[4]);
 }

@@ -112,7 +112,6 @@ void *Sockets::openClientSocket(void *arg) {
         exit(1);
     }
 
-
     return 0;
 }
 
@@ -129,13 +128,13 @@ void *Sockets::updateData(void *arg) {
     bzero(buffer, 256);
     fgets(buffer, 255, stdin);
 
-    /* Send message to the server */
-    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
-
-    if (n < 0) {
-        perror("ERROR writing to socket");
-        exit(1);
-    }
+//    /* Send message to the server */
+//    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
+//
+//    if (n < 0) {
+//        perror("ERROR writing to socket");
+//        exit(1);
+//    }
 
     /* Now read server response */
     bzero(buffer, 256);
