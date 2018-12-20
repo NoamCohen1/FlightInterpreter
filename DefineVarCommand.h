@@ -19,6 +19,8 @@
 #include "InfixToPrefix.h"
 #include "Command.h"
 #include "Maps.h"
+#include "EqualCommand.h"
+#include "BindCommand.h"
 
 class DefineVarCommand : public Command {
     Maps maps;
@@ -30,7 +32,6 @@ public:
     virtual void setParams(vector<string> line) {
         this->line = line;
     }
-
 };
 
 

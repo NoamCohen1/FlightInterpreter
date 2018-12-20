@@ -1,9 +1,9 @@
 //
-// Created by gal on 12/19/18.
+// Created by noam on 12/20/18.
 //
 
-#ifndef INTERPRETERFLIGHT_EQUALCOMMAND_H
-#define INTERPRETERFLIGHT_EQUALCOMMAND_H
+#ifndef INTERPRETERFLIGHT_BINDCOMMAND_H
+#define INTERPRETERFLIGHT_BINDCOMMAND_H
 
 #include "vector"
 #include "string"
@@ -20,7 +20,7 @@
 #include "Command.h"
 #include "Maps.h"
 
-class EqualCommand : public Command {
+class BindCommand : public Command {
     Maps maps;
     map<string, double> varsMap;
     vector<string> line;
@@ -32,4 +32,5 @@ public:
     }
 };
 
-#endif //INTERPRETERFLIGHT_EQUALCOMMAND_H
+
+#endif //INTERPRETERFLIGHT_BINDCOMMAND_H

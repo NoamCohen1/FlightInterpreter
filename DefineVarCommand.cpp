@@ -5,5 +5,17 @@
 #include "DefineVarCommand.h"
 
 int DefineVarCommand::execute() {
-
+    Command *equal = new EqualCommand();
+    Command *bind = new BindCommand();
+    for (int i = 0; i < this->line.size(); ++i) {
+        if (this->line[i] == "=") {
+            if (this->line[i + 1] == "bind") {
+                bind->setParams(this->line);
+                bind->execute();
+            } else {
+                equal->setParams(this->line);
+                equal->execute();
+            }
+        }
+    }
 }

@@ -32,12 +32,11 @@ int OpenServerCommand::execute() {
     params->Hz = Hz;
     params->port = socketPort;
     params->maps = maps;
-    Sockets* serverS;
 
+    Sockets* serverS;
     pthread_t trid;
     pthread_create(&trid, nullptr, serverS->openServerSocket, params);
     //pthread_join(&trid, &params);
     return 0;
-
 }
 

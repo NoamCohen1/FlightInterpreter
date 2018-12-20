@@ -154,12 +154,16 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
 }
 
 void FlightReader::parser(vector<string> info) {
-    if ((commandsMap.find(info[0])->second) != nullptr) {
-        Expression *c = commandsMap.find(info[0])->second;
+    Expression *c = commandsMap.find(info[0])->second;
+    if (c == nullptr) {
+        string s = this->maps.getBindsMap().find(info[0])->second;
+        if (s != "") {
+            Expression *c = commandsMap.find(info[1])->second;
+            dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
+            c->calculate();
+        }
+    } else {
         dynamic_cast<ExpressionCommand*> (c)->getCommand()->setParams(info);
         c->calculate();
     }
-    // check if it is var so we put it
-//    // erase the first element
-//    info.erase(info.begin());
 }

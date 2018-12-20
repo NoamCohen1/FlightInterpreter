@@ -9,6 +9,7 @@
 #include <vector>
 #include "Command.h"
 #include "Maps.h"
+#include "InfixToPrefix.h"
 
 class ConditionParser : public Command {
     Maps maps;
@@ -17,6 +18,10 @@ public:
     virtual int execute() = 0;
 
     virtual void setParams(vector<string> line) = 0;
+
+    virtual bool checkCondition(vector<string> condition);
+
+    bool isOperator(char s);
 };
 
 

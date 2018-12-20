@@ -18,6 +18,9 @@
 #include "OpenServerCommand.h"
 #include "ConnectCommand.h"
 #include "DefineVarCommand.h"
+#include "SleepCommand.h"
+#include "PrintCommand.h"
+#include "EqualCommand.h"
 #include "Maps.h"
 
 using namespace std;
@@ -37,6 +40,12 @@ public:
                                                              new ExpressionCommand(new ConnectCommand())));
         this->commandsMap.insert(pair <string, Expression*> ("var",
                                                              new ExpressionCommand(new DefineVarCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("=",
+                                                             new ExpressionCommand(new EqualCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("print",
+                                                             new ExpressionCommand(new PrintCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("sleep",
+                                                             new ExpressionCommand(new SleepCommand())));
     }
 
     bool isOperator(char s);
