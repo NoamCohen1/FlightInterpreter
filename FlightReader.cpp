@@ -19,6 +19,7 @@ void FlightReader::lexer(string line) {
     for (int i = 0; i < line.size(); ++i) {
         string s = to_string(line.at(i));
         if (line.at(i) == '{') {
+            howManyBraces++;
             continue;
         }
         if (line.at(i) == '}') {
@@ -59,17 +60,32 @@ void FlightReader::lexer(string line) {
     info.push_back(buffer.substr(0, pos));
     vector<string> result;
     result = uniteParam(info);
-    if (result[0] == "while") {
+
+    if ((result[0] == "while") && (!(this->inIf)) && (!(this->notFirstTime))) {
         this->inWhile = true;
-        howManyBraces++;
+        this->notFirstTime = true;
+    }
+    if ((result[0] == "if") && (!(this->inWhile)) && (!(this->notFirstTime))) {
+        this->inIf = true;
+        this->notFirstTime = true;
     }
     if (this->inWhile) {
         this->ifOrWhileCommands.push_back(result);
-        if (howManyBraces == 0) {
-//            ConditionParser *lp;
-            conditionInCondition(ifOrWhileCommands);
-            ifOrWhileCommands.clear();
+        if ((this->howManyBraces == 0) && (this->notFirstTime)) {
+            LoopCommand loopCommand(this->ifOrWhileCommands, this->commandsMap);
+            loopCommand.execute();
+            this->ifOrWhileCommands.clear();
             this->inWhile = false;
+            this->notFirstTime = false;
+        }
+    } else if (this->inIf) {
+        this->ifOrWhileCommands.push_back(result);
+        if ((this->howManyBraces == 0) && (this->notFirstTime)) {
+            IfCommand ifCommand(this->ifOrWhileCommands, this->commandsMap);
+            ifCommand.execute();
+            this->ifOrWhileCommands.clear();
+            this->inIf = false;
+            this->notFirstTime = false;
         }
     } else {
         parser(result);

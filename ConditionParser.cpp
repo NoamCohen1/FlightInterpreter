@@ -46,3 +46,34 @@ bool ConditionParser::checkCondition(string condition) {
     int socketPort = (int) expressions[0]->calculate();
     int Hz = (int) expressions[1]->calculate();
 }
+
+vector<vector<string>> ConditionParser::conditionInCondition(vector<vector<string>> vectors, int i) {
+    int howManyBraces = 0;
+    vector<vector<string>> result;
+    int j;
+    for (j = i; j < vectors.size(); ++j) {
+        result.push_back(vectors[j]);
+        for (int k = 0; k < vectors[j].size(); ++k) {
+            if (vectors[j][k] == "{") {
+                howManyBraces++;
+                break;
+            }
+        }
+        if (howManyBraces != 0) {
+            break;
+        }
+    }
+    while (howManyBraces != 0) {
+        for (int k = 0; k < vectors[j].size(); ++k) {
+            result.push_back(vectors[j]);
+            if (vectors[j][k] == "{") {
+                howManyBraces++;
+            }
+            if (vectors[j][k] == "}") {
+                howManyBraces--;
+            }
+        }
+        j++;
+    }
+    return result;
+}

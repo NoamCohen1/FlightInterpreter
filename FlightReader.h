@@ -12,7 +12,8 @@
 #include <string>
 #include <bits/stdc++.h>
 #include "Command.h"
-#include "ConditionParser.h"
+#include "LoopCommand.h"
+#include "IfCommand.h"
 #include "ExpressionCommand.h"
 #include "OpenServerCommand.h"
 #include "ConnectCommand.h"
@@ -29,6 +30,8 @@ class FlightReader {
     Maps maps;
     vector<vector<string>> ifOrWhileCommands;
     bool inWhile = false;
+    bool inIf = false;
+    bool notFirstTime = false;
     int howManyBraces = 0;
 
 public:

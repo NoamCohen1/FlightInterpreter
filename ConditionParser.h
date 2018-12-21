@@ -10,8 +10,10 @@
 #include "Command.h"
 #include "Maps.h"
 #include "InfixToPrefix.h"
+#include "ExpressionCommand.h"
 
 class ConditionParser : public Command {
+protected:
     Maps maps;
     //map<string, Expression*> commandsMap;
 public:
@@ -23,6 +25,7 @@ public:
 
     bool isOperator(char s);
 
+    vector<vector<string>> conditionInCondition(vector<vector<string>> vectors, int i);
 };
 
 
