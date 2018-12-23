@@ -15,11 +15,11 @@
 
 using namespace std;
 
-struct ServerParams {
-    int port;
-    int Hz;
-    Maps maps;
-};
+//struct ServerParams {
+//    int port;
+//    int Hz;
+//    Maps maps;
+//};
 
 class OpenServerCommand : public Command {
     Maps maps;

@@ -75,7 +75,6 @@ public:
         }
     }
 
-
     void setSockfd(int sockfd) {
         this->sockfd = sockfd;
     }
@@ -94,6 +93,11 @@ public:
     map<string, double> getVarsValuesMap() {
         return varsValuesMap;
     }
+
+    map<string, double> getLocationsAndValMap() {
+        return locationsAndValMap;
+    }
+
 
     void updateVarsValuesMap(string s, double d);
 

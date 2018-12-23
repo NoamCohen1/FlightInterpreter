@@ -130,37 +130,37 @@ void *Sockets::openClientSocket(void *arg) {
 }
 
 
-void *Sockets::updateData(void *arg) {
-    struct ClientParams *params = (struct ClientParams *) arg;
-    char buffer[256];
-    int n;
-    /* Now ask for a message from the user, this message
-       * will be read by server
-    */
-
-    printf("Please enter the message: ");
-    bzero(buffer, 256);
-    fgets(buffer, 255, stdin);
-
-//    /* Send message to the server */
-//    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
+//void *Sockets::updateData(void *arg) {
+//    struct ClientParams *params = (struct ClientParams *) arg;
+//    char buffer[256];
+//    int n;
+//    /* Now ask for a message from the user, this message
+//       * will be read by server
+//    */
+//
+//    printf("Please enter the message: ");
+//    bzero(buffer, 256);
+//    fgets(buffer, 255, stdin);
+//
+////    /* Send message to the server */
+////    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
+////
+////    if (n < 0) {
+////        perror("ERROR writing to socket");
+////        exit(1);
+////    }
+//
+//    /* Now read server response */
+//    bzero(buffer, 256);
+//    n = read(params->maps.getSockfd(), buffer, 255);
 //
 //    if (n < 0) {
-//        perror("ERROR writing to socket");
+//        perror("ERROR reading from socket");
 //        exit(1);
 //    }
-
-    /* Now read server response */
-    bzero(buffer, 256);
-    n = read(params->maps.getSockfd(), buffer, 255);
-
-    if (n < 0) {
-        perror("ERROR reading from socket");
-        exit(1);
-    }
-
-    printf("%s\n", buffer);
-}
+//
+//    printf("%s\n", buffer);
+//}
 
 
 //void Sockets::func1() {

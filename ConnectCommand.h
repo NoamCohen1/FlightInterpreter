@@ -15,11 +15,11 @@
 
 using namespace std;
 
-struct ClientParams {
-    string ipAddress;
-    int port;
-    Maps maps;
-};
+//struct ClientParams {
+//    string ipAddress;
+//    int port;
+//    Maps maps;
+//};
 
 class ConnectCommand : public Command {
     Maps maps;
