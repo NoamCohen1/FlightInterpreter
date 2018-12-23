@@ -27,7 +27,7 @@ vector<string> InfixToPrefix::convertFunc(vector<string> stringInfix){
     for(int i = 0; i < l; i++)
     {
         //if it is not operator or ( ) it is a number and we push it to the stack
-        if((!isOperator(stringInfix[i])) && (stringInfix[i] != "(") && (stringInfix[i] != ")")){
+        if((!isOperator(stringInfix[i][0])) && (stringInfix[i] != "(") && (stringInfix[i] != ")")){
             postfixString.push_back(stringInfix[i]);
         }
 
@@ -78,7 +78,7 @@ Expression* InfixToPrefix::turnToExppression(vector<string> postfixString){
     stack<Expression*> stack;
 
     for (int i = 0; i < postfixString.size(); ++i){
-        if(!isOperator(postfixString[i])){
+        if(!isOperator(postfixString[i][0])){
             stack.push(new Number(stod(postfixString[i])));
         }
         else {
@@ -107,8 +107,9 @@ Expression* InfixToPrefix::turnToExppression(vector<string> postfixString){
     return result;
 }
 
-bool InfixToPrefix::isOperator(string s){
-    if (s == "+" || s == "-" || s == "/" || s == "*"){
+  //check if it is + - / * ( )
+    bool InfixToPrefix::isOperator(char c){
+        if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')'){
         return true;
     }
     else{
@@ -116,22 +117,53 @@ bool InfixToPrefix::isOperator(string s){
     }
 }
 
+//bool InfixToPrefix::isOperator(char c){
+//    //check if it is - + * /
+//    if (c == '-' || c == '+' || c == '*' || c == '/'){
+//        return true;
+//    }
+//    else{
+//        return false;
+//    }
+//}
+
 vector<string> InfixToPrefix::convertToStrings(string str) {
     vector<string> strings;
     string num = "";
     for (int i = 0; i < str.size(); ++i) {
-        if (!isOperator(to_string(str[i])) && !(to_string(str[i]) == "(") && !(to_string(str[i]) == ")")) {
+        if (!isOperator(str[i]) && !(to_string(str[i]) == "(") && !(to_string(str[i]) == ")")) {
             num += str[i];
         } else {
             if (num != "") {
                 strings.push_back(num);
                 num = "";
             }
-            strings.push_back(to_string(str[i]));
+            switch (str[i]) {
+                case 40:
+                    strings.push_back("(");
+                    break;
+                case 41:
+                    strings.push_back(")");
+                    break;
+                case 42:
+                    strings.push_back("*");
+                    break;
+                case 43:
+                    strings.push_back("+");
+                    break;
+                case 45:
+                    strings.push_back("-");
+                    break;
+                case 47:
+                    strings.push_back("/");
+                    break;
+            }
+            //strings.push_back(to_string(str[i]));
         }
     }
     if (num != "") {
         strings.push_back(num);
     }
+    maps.replaceVarByValue(strings);
     return strings;
 }

@@ -21,11 +21,13 @@ public:
 
     virtual void setParams(vector<string> line) = 0;
 
-    virtual bool checkCondition(string condition);
+    virtual bool findCondition(vector<string> condition);
 
-    bool isOperator(char s);
+    bool isOperator(string s);
 
-    vector<vector<string>> conditionInCondition(vector<vector<string>> vectors, int i);
+    vector<vector<string>> conditionInCondition(vector<vector<string>> vectors, int &i);
+
+    bool checkTheCondition(vector<string> condition);
 };
 
 

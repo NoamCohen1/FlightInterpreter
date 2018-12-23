@@ -6,7 +6,8 @@
 #include <regex>
 
 bool FlightReader::isOperator(char s) {
-    if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"' || s == '=') {
+    if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"' || s == '='
+    || s == '>' || s == '<' || s == '!') {
         return true;
     } else {
         return false;
@@ -20,14 +21,12 @@ void FlightReader::lexer(string line) {
         string s = to_string(line.at(i));
         if (line.at(i) == '{') {
             howManyBraces++;
-            continue;
         }
         if (line.at(i) == '}') {
             howManyBraces--;
-            continue;
         }
-        if (isOperator(line.at(i))) {
-            if ((buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
+        if ((isOperator(line.at(i))) || (line.at(i) == '{') || (line.at(i) == '}')) {
+            if ((i != 0) && (buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
             }
             buffer += line.at(i);
@@ -47,49 +46,63 @@ void FlightReader::lexer(string line) {
             buffer += line.at(i);
         }
     }
-    cout << buffer << endl;
+    //cout << buffer << endl;
 
     // split each line it get from the file to list of separate strings
     vector<string> info;
     size_t pos = 0;
     string delimiter = " ";
     while ((pos = buffer.find(delimiter)) != string::npos) {
-        info.push_back(buffer.substr(0, pos));
+        if (buffer.substr(0, pos) != "") {
+            info.push_back(buffer.substr(0, pos));
+        }
         buffer.erase(0, pos + delimiter.length());
     }
-    info.push_back(buffer.substr(0, pos));
+    if (buffer.substr(0, pos) != "") {
+        info.push_back(buffer.substr(0, pos));
+    }
     vector<string> result;
-    result = uniteParam(info);
+    if (info.size() != 0) {
+        result = uniteParam(info);
+        if ((result[0] == "while") && (!(this->inIf)) && (!(this->notFirstTime))) {
+            this->inWhile = true;
+        }
+        if ((result[0] == "if") && (!(this->inWhile)) && (!(this->notFirstTime))) {
+            this->inIf = true;
+        }
+        if (this->inWhile) {
+            bool beenThereDoneThat = false;
+            this->ifOrWhileCommands.push_back(result);
+            if ((this->howManyBraces == 0) && (this->notFirstTime)) {
+                LoopCommand loopCommand(this->ifOrWhileCommands, this->commandsMap);
+                loopCommand.execute();
+                beenThereDoneThat = true;
+                this->ifOrWhileCommands.clear();
+                this->inWhile = false;
+                this->notFirstTime = false;
+            }
+            if (!beenThereDoneThat) {
+                this->notFirstTime = true;
+            }
+        } else if (this->inIf) {
+            bool beenThereDoneThat = false;
+            this->ifOrWhileCommands.push_back(result);
+            if ((this->howManyBraces == 0) && (this->notFirstTime)) {
+                IfCommand ifCommand(this->ifOrWhileCommands, this->commandsMap);
+                ifCommand.execute();
+                beenThereDoneThat = true;
+                this->ifOrWhileCommands.clear();
+                this->inIf = false;
+                this->notFirstTime = false;
+            }
+            if (!beenThereDoneThat) {
+                this->notFirstTime = true;
+            }
+        } else {
+            parser(result);
+        }
+    }
 
-    if ((result[0] == "while") && (!(this->inIf)) && (!(this->notFirstTime))) {
-        this->inWhile = true;
-        this->notFirstTime = true;
-    }
-    if ((result[0] == "if") && (!(this->inWhile)) && (!(this->notFirstTime))) {
-        this->inIf = true;
-        this->notFirstTime = true;
-    }
-    if (this->inWhile) {
-        this->ifOrWhileCommands.push_back(result);
-        if ((this->howManyBraces == 0) && (this->notFirstTime)) {
-            LoopCommand loopCommand(this->ifOrWhileCommands, this->commandsMap);
-            loopCommand.execute();
-            this->ifOrWhileCommands.clear();
-            this->inWhile = false;
-            this->notFirstTime = false;
-        }
-    } else if (this->inIf) {
-        this->ifOrWhileCommands.push_back(result);
-        if ((this->howManyBraces == 0) && (this->notFirstTime)) {
-            IfCommand ifCommand(this->ifOrWhileCommands, this->commandsMap);
-            ifCommand.execute();
-            this->ifOrWhileCommands.clear();
-            this->inIf = false;
-            this->notFirstTime = false;
-        }
-    } else {
-        parser(result);
-    }
 }
 
 vector<string> FlightReader::uniteParam(vector<string> info) {
@@ -99,7 +112,13 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     int howManyBrackets = 0;
     while (i < info.size()) {
         if (!isOperator((info[i]).at(0))) {
-            if ((i == (info.size() - 1)) && (info[i - 1] == ")")) {
+            if ((info[i] == "{") || (info[i] == "}")) {
+                if (i == 0) {
+                    params.push_back(info[i]);
+                    ++i;
+                    continue;
+                }
+            } else if ((i == (info.size() - 1)) && (info[i - 1] == ")")) {
                 params.push_back(param1);
                 param1 = "";
                 param1 += info[i];
@@ -130,9 +149,11 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 param1 = "";
             }
         }
-        if (info[i] == "=") {
-            params.push_back(param1);
-            param1 = "";
+        if ((info[i] == "=") || (info[i] == "!") || (info[i] == "<") || (info[i] == ">")) {
+            if (param1 != "") {
+                params.push_back(param1);
+                param1 = "";
+            }
             params.push_back(info[i]);
             ++i;
             continue;

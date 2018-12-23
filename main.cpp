@@ -7,8 +7,8 @@
 
 
 int main() {
-    FlightReader fr;
-    fr.lexer("openDataServer 5400 10");
+   // FlightReader fr;
+//    fr.lexer("openDataServer 5400 10");
 
 //    FlightReader fr;
 //    fr.lexer("connect 127.0.0.1 5402");
@@ -17,23 +17,27 @@ int main() {
 //    Sockets* s = new Sockets();
 //    s->func1();
 
-    while(true){}
-    return 0;
-
-
-//    ifstream ourFile;
-//    string buffer;
-//    FlightReader flightReader;
-//    ourFile.open("flightFile.txt", ifstream::in | ifstream::app);
-//    if (!ourFile) {
-//        throw "Failed Opening File";
-//    }
-//    // read each line in the file and build the flight
-//    while (getline(ourFile, buffer)) {
-//        flightReader.lexer(buffer);
-//    }
-//    ourFile.close();
+//    while(true){}
 //    return 0;
+
+
+    ifstream ourFile;
+    string buffer = "";
+    FlightReader flightReader;
+    ourFile.open("flightFile.txt", ifstream::in | ifstream::app);
+    if (!ourFile) {
+        throw "Failed Opening File";
+    }
+    Maps maps;
+    // read each line in the file and build the flight
+    while (getline(ourFile, buffer)) {
+        flightReader.lexer(buffer);
+    }
+    ourFile.close();
+
+    //while(true){}
+
+    return 0;
 
 
 

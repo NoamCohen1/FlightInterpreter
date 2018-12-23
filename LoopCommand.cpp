@@ -6,7 +6,7 @@
 
 int LoopCommand::execute() {
     vector<vector<string>> vectors;
-    while (checkCondition(this->commands[0][1])) {
+    while (findCondition(this->commands[0])) {
         for (int i = 0; i < this->commands.size(); ++i) {
             if ((i != 0) && (this->commands[i][0] == "while")) {
                 vectors = conditionInCondition(this->commands, i);
@@ -17,15 +17,15 @@ int LoopCommand::execute() {
                 IfCommand ifCommand(vectors, this->commandsMap);
                 ifCommand.execute();
             } else {
-                Expression *c = commandsMap.find(this->commands[i][0])->second;
-                if (c == nullptr) {
-                    string s = this->maps.getBindsMap().find(this->commands[i][0])->second;
-                    if (s != "") {
+                if (commandsMap.count(this->commands[i][0]) <= 0) {
+                    if (this->maps.getBindsMap().count(this->commands[i][0]) > 0) {
+                        string s = this->maps.getBindsMap().find(this->commands[i][0])->second;
                         Expression *c = commandsMap.find(this->commands[i][1])->second;
                         dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i]);
                         c->calculate();
                     }
                 } else {
+                    Expression *c = commandsMap.find(this->commands[i][0])->second;
                     dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i]);
                     c->calculate();
                 }

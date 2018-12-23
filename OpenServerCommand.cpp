@@ -33,9 +33,8 @@ int OpenServerCommand::execute() {
     params->port = socketPort;
     params->maps = maps;
 
-    Sockets* serverS;
     pthread_t trid;
-    pthread_create(&trid, nullptr, serverS->openServerSocket, params);
+    pthread_create(&trid, nullptr, Sockets::openServerSocket, params);
     //pthread_join(&trid, &params);
     return 0;
 }

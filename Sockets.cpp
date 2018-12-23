@@ -1,7 +1,4 @@
 #include "Sockets.h"
-#include "OpenServerCommand.h"
-#include "ConnectCommand.h"
-
 
 void *Sockets::openServerSocket(void *arg) {
     struct ServerParams *params = (struct ServerParams *) arg;
@@ -49,7 +46,24 @@ void *Sockets::openServerSocket(void *arg) {
 
     /* If connection is established then start communicating */
     bzero(buffer, 256);
-    n = read(newsockfd, buffer, 255);
+    while (true) {
+        n = read(newsockfd, buffer, 255);
+        if (n < 0) {
+            perror("ERROR reading from socket");
+            exit(1);
+        }
+        // split each line it get from the file to list of separate strings
+        vector<double> info;
+        size_t pos = 0;
+        string delimiter = ",";
+        string buff = buffer;
+        while ((pos = buff.find(delimiter)) != string::npos) {
+            info.push_back(stoi(buff.substr(0, pos)));
+            buff.erase(0, pos + delimiter.length());
+        }
+        info.push_back(stoi(buff.substr(0, pos)));
+        this->maps.updateLocationsAndValMap(info);
+    }
 
     if (n < 0) {
         perror("ERROR reading from socket");

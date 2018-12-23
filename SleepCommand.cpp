@@ -5,5 +5,13 @@
 #include "SleepCommand.h"
 
 int SleepCommand::execute() {
-    return 0;
+    double seconds = 0;
+    InfixToPrefix infToPre;
+    vector<string> splitedString;
+    vector<string> result;
+    splitedString = infToPre.convertToStrings(this->line[1]);
+    result = infToPre.convertFunc(splitedString);
+    Expression *e = infToPre.turnToExppression(result);
+    seconds = (e->calculate()) * 1000;
+    sleep(seconds);
 }
