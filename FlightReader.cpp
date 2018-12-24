@@ -225,11 +225,11 @@ void FlightReader::parser(vector<string> info) {
         string s = this->maps.getBindsMap().find(info[0])->second;
         if (s != "") {
             Expression *c = commandsMap.find(info[1])->second;
-            dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
+            dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);
             c->calculate();
         }
     } else {
-        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info);
+        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);
         c->calculate();
     }
 }

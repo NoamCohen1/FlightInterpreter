@@ -98,7 +98,6 @@ public:
         return locationsAndValMap;
     }
 
-
     void updateVarsValuesMap(string s, double d);
 
     void updateBindsMap(string var, string path);

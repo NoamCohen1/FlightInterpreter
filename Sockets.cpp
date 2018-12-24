@@ -62,7 +62,7 @@ void *Sockets::openServerSocket(void *arg) {
             buff.erase(0, pos + delimiter.length());
         }
         info.push_back(stoi(buff.substr(0, pos)));
-        this->maps.updateLocationsAndValMap(info);
+        params->maps.updateLocationsAndValMap(info);
     }
 
     if (n < 0) {

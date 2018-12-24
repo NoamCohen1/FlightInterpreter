@@ -29,8 +29,9 @@ public:
 
     void setValue(string newValue);
 
-    virtual void setParams(vector<string> line) {
+    virtual void setParams(vector<string> line, Maps maps) {
         this->line = line;
+        this->maps = maps;
     }
 };
 

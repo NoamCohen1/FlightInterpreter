@@ -6,7 +6,7 @@
 
 int SleepCommand::execute() {
     double seconds = 0;
-    InfixToPrefix infToPre;
+    InfixToPrefix infToPre(this->maps);
     vector<string> splitedString;
     vector<string> result;
     splitedString = infToPre.convertToStrings(this->line[1]);

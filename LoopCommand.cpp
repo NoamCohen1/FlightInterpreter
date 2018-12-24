@@ -21,12 +21,12 @@ int LoopCommand::execute() {
                     if (this->maps.getBindsMap().count(this->commands[i][0]) > 0) {
                         string s = this->maps.getBindsMap().find(this->commands[i][0])->second;
                         Expression *c = commandsMap.find(this->commands[i][1])->second;
-                        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i]);
+                        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i], this->maps);
                         c->calculate();
                     }
                 } else {
                     Expression *c = commandsMap.find(this->commands[i][0])->second;
-                    dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i]);
+                    dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(this->commands[i], this->maps);
                     c->calculate();
                 }
             }

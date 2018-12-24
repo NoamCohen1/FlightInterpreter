@@ -29,8 +29,9 @@ public:
 
     static void* thread_func(void* arg);
 
-    virtual void setParams(vector<string> line) {
+    virtual void setParams(vector<string> line, Maps maps) {
         this->line = line;
+        this->maps = maps;
     }
 };
 

@@ -22,13 +22,13 @@ int main() {
 
 
     ifstream ourFile;
+    Maps maps;
     string buffer = "";
-    FlightReader flightReader;
+    FlightReader flightReader(maps);
     ourFile.open("flightFile.txt", ifstream::in | ifstream::app);
     if (!ourFile) {
         throw "Failed Opening File";
     }
-    Maps maps;
     // read each line in the file and build the flight
     while (getline(ourFile, buffer)) {
         flightReader.lexer(buffer);

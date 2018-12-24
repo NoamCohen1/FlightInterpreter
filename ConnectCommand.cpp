@@ -13,7 +13,7 @@ int ConnectCommand::execute() {
     if (line.size() != 3) {
         throw "The Number of Arguments is Not Correct";
     }
-    InfixToPrefix infToPre;
+    InfixToPrefix infToPre(this->maps);
     vector<string> strings;
     vector<string> stringsConverted;
     vector<Expression*> expressions;

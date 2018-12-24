@@ -11,7 +11,7 @@ int EqualCommand::execute() {
         d = this->maps.getVarsValuesMap().find(s)->second;
         this->maps.updateVarsValuesMap(this->line[0], d);
     } else {
-        InfixToPrefix infToPre;
+        InfixToPrefix infToPre(this->maps);
         vector<string> strings;
         vector<string> stringsConverted;
         strings = infToPre.convertToStrings(s);

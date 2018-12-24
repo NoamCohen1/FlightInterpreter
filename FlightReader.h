@@ -35,7 +35,7 @@ class FlightReader {
     int howManyBraces = 0;
 
 public:
-    FlightReader() {
+    FlightReader(Maps maps) {
         this->commandsMap.insert(pair <string, Expression*> ("openDataServer",
                                                              new ExpressionCommand(new OpenServerCommand())));
         this->commandsMap.insert(pair <string, Expression*> ("connect",
@@ -52,6 +52,7 @@ public:
 //                                                             new ExpressionCommand(new ConditionParser())));
 //        this->commandsMap.insert(pair <string, Expression*> ("if",
 //                                                             new ExpressionCommand(new SleepCommand())));
+        this->maps = maps;
     }
 
     bool isOperator(char s);

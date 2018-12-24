@@ -10,11 +10,11 @@ int DefineVarCommand::execute() {
     for (int i = 0; i < this->line.size(); ++i) {
         if (this->line[i] == "=") {
             if (this->line[i + 1] == "bind") {
-                bind->setParams(this->line);
+                bind->setParams(this->line, this->maps);
                 bind->execute();
             } else {
                 this->line.erase(this->line.begin());
-                equal->setParams(this->line);
+                equal->setParams(this->line, this->maps);
                 equal->execute();
             }
         }

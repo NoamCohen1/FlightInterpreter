@@ -19,7 +19,9 @@ protected:
 public:
     virtual int execute() = 0;
 
-    virtual void setParams(vector<string> line) = 0;
+    virtual void setParams(vector<string> line, Maps maps) {
+        this->maps = maps;
+    }
 
     virtual bool findCondition(vector<string> condition);
 

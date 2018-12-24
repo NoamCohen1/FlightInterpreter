@@ -75,7 +75,7 @@ bool ConditionParser::checkTheCondition(vector<string> condition) {
     //we want to turn them to expressions and calculate each one of them
     double left = 0;
     double right = 0;
-    InfixToPrefix infToPre;
+    InfixToPrefix infToPre(this->maps);
     vector<string> stringsLeft;
     vector<string> resultLeft;
     vector<string> stringsRight;

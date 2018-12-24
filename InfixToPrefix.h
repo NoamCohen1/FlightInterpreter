@@ -23,10 +23,18 @@ using namespace std;
 class InfixToPrefix{
     Maps maps;
 public:
+    InfixToPrefix(Maps maps) {
+        this->maps = maps;
+    }
+
     int getPriority(string str);
+
     vector<string> convertFunc(vector<string> stringInfix);
+
     Expression* turnToExppression(vector<string> postfixString);
+
     bool isOperator(char c);
+
     vector<string> convertToStrings(string str);
 };
 

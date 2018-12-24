@@ -42,7 +42,7 @@ class Sockets {
     //struct sockaddr_in clientSocket;
     map<string, string> varPlaces;
     //int id;
-    Maps maps;
+    //Maps maps;
 public:
 //    Sockets(){
 //        this->planeSocket.sin_addr.s_addr = 0;
