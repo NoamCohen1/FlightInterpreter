@@ -1,4 +1,1 @@
-if 3*5 != 18{
-
-    print 1
-}
+openDataServer 5400 10

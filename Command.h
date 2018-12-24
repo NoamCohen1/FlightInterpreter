@@ -17,7 +17,7 @@ class Command {
 public:
     virtual int execute() = 0;
 
-    virtual void setParams(vector<string> line, Maps maps) = 0;
+    virtual void setParams(vector<string> line, Maps *maps) = 0;
 };
 
 

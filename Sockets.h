@@ -28,13 +28,13 @@ using namespace std;
 struct ClientParams {
     string ipAddress;
     int port;
-    Maps maps;
+    Maps *maps;
 };
 
 struct ServerParams {
     int port;
     int Hz;
-    Maps maps;
+    Maps *maps;
 };
 
 class Sockets {

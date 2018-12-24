@@ -5,8 +5,16 @@
 #include "PrintCommand.h"
 
 int PrintCommand::execute() {
-    if (this->maps.getVarsValuesMap().count(this->line[1]) > 0) {
-        this->line[1] = to_string(this->maps.getVarsValuesMap().find(this->line[1])->second);
-    }
-    cout << this->line[1] << endl;
+    int toPrint = 0;
+    string help = "";
+    InfixToPrefix infToPre(this->maps);
+    vector<string> splitedString;
+    vector<string> result;
+    splitedString = infToPre.convertToStrings(this->line[1]);
+    result = infToPre.convertFunc(splitedString);
+    Expression *e = infToPre.turnToExppression(result);
+    toPrint = e->calculate();
+    cout << toPrint << endl;
 }
+
+

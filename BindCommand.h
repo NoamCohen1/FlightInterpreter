@@ -21,13 +21,13 @@
 #include "Maps.h"
 
 class BindCommand : public Command {
-    Maps maps;
+    Maps *maps;
     map<string, double> varsMap;
     vector<string> line;
 public:
     virtual int execute();
 
-    virtual void setParams(vector<string> line, Maps maps) {
+    virtual void setParams(vector<string> line, Maps *maps) {
         this->line = line;
         this->maps = maps;
     }

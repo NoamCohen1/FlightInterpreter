@@ -62,7 +62,7 @@ void *Sockets::openServerSocket(void *arg) {
             buff.erase(0, pos + delimiter.length());
         }
         info.push_back(stoi(buff.substr(0, pos)));
-        params->maps.updateLocationsAndValMap(info);
+        params->maps->updateLocationsAndValMap(info);
     }
 
     if (n < 0) {
@@ -101,7 +101,7 @@ void *Sockets::openClientSocket(void *arg) {
 
     /* Create a socket point */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    params->maps.setSockfd(sockfd);
+    params->maps->setSockfd(sockfd);
 
     if (sockfd < 0) {
         perror("ERROR opening socket");

@@ -92,6 +92,9 @@ Expression* InfixToPrefix::turnToExppression(vector<string> postfixString){
                     break;
                 case '-':
                     stack.push(new Minus(left,right)) ;
+                    if (postfixString[i][0] == '-') {
+                        //stack.push(new Number(0.0));
+                    }
                     break;
                 case '/':
                     stack.push(new Div(left,right)) ;
@@ -164,6 +167,50 @@ vector<string> InfixToPrefix::convertToStrings(string str) {
     if (num != "") {
         strings.push_back(num);
     }
-    maps.replaceVarByValue(strings);
-    return strings;
+    maps->replaceVarByValue(strings);
+
+    string s = "";
+    for (int i = 0; i < strings.size(); ++i) {
+        s += strings[i];
+    }
+
+    vector<string> strings2;
+    string num2 = "";
+    for (int i = 0; i < s.size(); ++i) {
+        if (!isOperator(s[i]) && !(to_string(s[i]) == "(") && !(to_string(s[i]) == ")")) {
+            num2 += s[i];
+        } else {
+            if (num2 != "") {
+                strings2.push_back(num2);
+                num2 = "";
+            }
+            switch (s[i]) {
+                case 40:
+                    strings2.push_back("(");
+                    break;
+                case 41:
+                    strings2.push_back(")");
+                    break;
+                case 42:
+                    strings2.push_back("*");
+                    break;
+                case 43:
+                    strings2.push_back("+");
+                    break;
+                case 45:
+                    strings2.push_back("-");
+                    break;
+                case 47:
+                    strings2.push_back("/");
+                    break;
+            }
+            //strings.push_back(to_string(str[i]));
+        }
+    }
+    if (num2 != "") {
+        strings2.push_back(num2);
+    }
+
+    return strings2;
+
 }

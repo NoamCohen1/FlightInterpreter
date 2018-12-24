@@ -21,7 +21,7 @@
 #include "Maps.h"
 
 class EqualCommand : public Command {
-    Maps maps;
+    Maps *maps;
     map<string, double> varsMap;
     vector<string> line;
 public:
@@ -29,7 +29,7 @@ public:
 
     void setValue(string newValue);
 
-    virtual void setParams(vector<string> line, Maps maps) {
+    virtual void setParams(vector<string> line, Maps *maps) {
         this->line = line;
         this->maps = maps;
     }

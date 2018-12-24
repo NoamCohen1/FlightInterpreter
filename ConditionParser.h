@@ -14,12 +14,12 @@
 
 class ConditionParser : public Command {
 protected:
-    Maps maps;
+    Maps *maps;
     //map<string, Expression*> commandsMap;
 public:
     virtual int execute() = 0;
 
-    virtual void setParams(vector<string> line, Maps maps) {
+    virtual void setParams(vector<string> line, Maps *maps) {
         this->maps = maps;
     }
 

@@ -22,7 +22,7 @@ int main() {
 
 
     ifstream ourFile;
-    Maps maps;
+    Maps *maps = new Maps();
     string buffer = "";
     FlightReader flightReader(maps);
     ourFile.open("flightFile.txt", ifstream::in | ifstream::app);
@@ -35,7 +35,7 @@ int main() {
     }
     ourFile.close();
 
-    //while(true){}
+    while(true){}
 
     return 0;
 

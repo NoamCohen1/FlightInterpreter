@@ -13,14 +13,15 @@ class IfCommand : public ConditionParser {
     vector<vector<string>> commands;
     map<string, Expression*> commandsMap;
 public:
-    IfCommand(vector<vector<string>> commands, map<string, Expression*> commandsMap) {
+    IfCommand(vector<vector<string>> commands, map<string, Expression*> commandsMap, Maps *maps) {
         this->commands = commands;
         this->commandsMap = commandsMap;
+        this->maps = maps;
     }
 
     virtual int execute();
 
-    virtual void setParams(vector<string> line, Maps maps) {}
+    virtual void setParams(vector<string> line, Maps *maps) {}
 };
 
 

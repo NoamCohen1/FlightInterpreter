@@ -21,9 +21,9 @@
 using namespace std;
 
 class InfixToPrefix{
-    Maps maps;
+    Maps *maps;
 public:
-    InfixToPrefix(Maps maps) {
+    InfixToPrefix(Maps *maps) {
         this->maps = maps;
     }
 

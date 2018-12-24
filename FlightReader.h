@@ -27,7 +27,7 @@ using namespace std;
 
 class FlightReader {
     map<string, Expression*> commandsMap;
-    Maps maps;
+    Maps *maps;
     vector<vector<string>> ifOrWhileCommands;
     bool inWhile = false;
     bool inIf = false;
@@ -35,7 +35,7 @@ class FlightReader {
     int howManyBraces = 0;
 
 public:
-    FlightReader(Maps maps) {
+    FlightReader(Maps *maps) {
         this->commandsMap.insert(pair <string, Expression*> ("openDataServer",
                                                              new ExpressionCommand(new OpenServerCommand())));
         this->commandsMap.insert(pair <string, Expression*> ("connect",

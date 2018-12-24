@@ -74,7 +74,7 @@ void FlightReader::lexer(string line) {
             bool beenThereDoneThat = false;
             this->ifOrWhileCommands.push_back(result);
             if ((this->howManyBraces == 0) && (this->notFirstTime)) {
-                LoopCommand loopCommand(this->ifOrWhileCommands, this->commandsMap);
+                LoopCommand loopCommand(this->ifOrWhileCommands, this->commandsMap, this->maps);
                 loopCommand.execute();
                 beenThereDoneThat = true;
                 this->ifOrWhileCommands.clear();
@@ -88,7 +88,7 @@ void FlightReader::lexer(string line) {
             bool beenThereDoneThat = false;
             this->ifOrWhileCommands.push_back(result);
             if ((this->howManyBraces == 0) && (this->notFirstTime)) {
-                IfCommand ifCommand(this->ifOrWhileCommands, this->commandsMap);
+                IfCommand ifCommand(this->ifOrWhileCommands, this->commandsMap, this->maps);
                 ifCommand.execute();
                 beenThereDoneThat = true;
                 this->ifOrWhileCommands.clear();
@@ -102,7 +102,6 @@ void FlightReader::lexer(string line) {
             parser(result);
         }
     }
-
 }
 
 vector<string> FlightReader::uniteParam(vector<string> info) {
@@ -222,7 +221,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
 void FlightReader::parser(vector<string> info) {
     Expression *c = commandsMap.find(info[0])->second;
     if (c == nullptr) {
-        string s = this->maps.getBindsMap().find(info[0])->second;
+        string s = this->maps->getBindsMap().find(info[0])->second;
         if (s != "") {
             Expression *c = commandsMap.find(info[1])->second;
             dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);

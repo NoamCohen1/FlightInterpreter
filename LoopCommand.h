@@ -14,14 +14,15 @@ class LoopCommand : public ConditionParser {
     vector<vector<string>> commands;
     map<string, Expression*> commandsMap;
 public:
-    LoopCommand(vector<vector<string>> commands, map<string, Expression*> commandsMap) {
+    LoopCommand(vector<vector<string>> commands, map<string, Expression*> commandsMap, Maps *maps) {
         this->commands = commands;
         this->commandsMap = commandsMap;
+        this->maps = maps;
     }
 
     virtual int execute();
 
-    virtual void setParams(vector<string> line, Maps maps) {}
+    virtual void setParams(vector<string> line, Maps *maps) {}
 };
 
 

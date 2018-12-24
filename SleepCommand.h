@@ -16,14 +16,14 @@
 using namespace std;
 
 class SleepCommand : public Command {
-    Maps maps;
+    Maps *maps;
     vector<string> line;
 public:
     virtual int execute();
 
     //static void* thread_func(void* arg);
 
-    virtual void setParams(vector<string> line, Maps maps) {
+    virtual void setParams(vector<string> line, Maps *maps) {
         this->line = line;
         this->maps = maps;
     }
