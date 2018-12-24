@@ -98,6 +98,10 @@ public:
         return locationsAndValMap;
     }
 
+    double getValueFromLocation(string location) {
+        return this->locationsAndValMap.find(location)->second;
+    }
+
     void updateVarsValuesMap(string s, double d);
 
     void updateBindsMap(string var, string path);
