@@ -22,7 +22,7 @@ int EqualCommand::execute() {
     }
     string newValue;
     if ((this->maps->getBindsMap().count(this->line[0])) > 0) {
-        newValue = "set " + this->maps->getBindsMap().find(this->line[0])->second + " " + to_string(d);
+        newValue = "set " + this->maps->getBindsMap().find(this->line[0])->second + " " + to_string(d) + "\r\n";
         this->setValue(newValue);
     }
 }

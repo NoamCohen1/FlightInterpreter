@@ -19,7 +19,7 @@ vector<string> &Maps::replaceVarByValue(vector<string> &origin) {
         if(this->varsValuesMap.count(origin[i]) > 0) {
             //swap
             if (this->varsValuesMap.find(origin[i])->second < 0) {
-                origin[i] = "0" + to_string(this->varsValuesMap.find(origin[i])->second);
+                origin[i] = "(0" + to_string(this->varsValuesMap.find(origin[i])->second) + ")";
             } else {
                 origin[i] = to_string(this->varsValuesMap.find(origin[i])->second);
             }

@@ -17,6 +17,8 @@ bool FlightReader::isOperator(char s) {
 void FlightReader::lexer(string line) {
     string buffer = "";
     string space = " ";
+    bool sawComma = false;
+    bool sawMinus = false;
     for (int i = 0; i < line.size(); ++i) {
         string s = to_string(line.at(i));
         if (line.at(i) == '{') {
@@ -26,6 +28,18 @@ void FlightReader::lexer(string line) {
             howManyBraces--;
         }
         if ((isOperator(line.at(i))) || (line.at(i) == '{') || (line.at(i) == '}')) {
+            if (sawComma) {
+                if ((i != 0) && (buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
+                    buffer += space;
+                }
+                if (sawMinus) {
+                    buffer += ')';
+                }
+                if ((line.at(i) == '-') && (!sawMinus)) {
+                    sawMinus = true;
+                }
+
+            }
             if ((i != 0) && (buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
             }
@@ -38,7 +52,8 @@ void FlightReader::lexer(string line) {
                 buffer += space;
             }
             if (line.at(i + 1) == '-') {
-                buffer += '0';
+                buffer += '(' + space + '0';
+                sawComma = true;
             }
         } else if (to_string(line.at(i)) == "9") {
             buffer += space;
@@ -110,7 +125,9 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     int i = 0;
     int howManyBrackets = 0;
     while (i < info.size()) {
+        // if the first char in the string is not an operator
         if (!isOperator((info[i]).at(0))) {
+            //
             if ((info[i] == "{") || (info[i] == "}")) {
                 if (i == 0) {
                     params.push_back(info[i]);
@@ -147,6 +164,21 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                 params.push_back(param1);
                 param1 = "";
             }
+            // if it is an operator
+        } else if ((i != 0) && (info[i] == "-") && ((info[i - 1] == "=") || (isOperator(info[i - 1].at(0))))) {
+            param1 += "(0" + info[i];
+            i++;
+            while (!(isOperator(info[i].at(0)))) {
+                param1 += info[i];
+                i++;
+                if (i == info.size()) {
+                    param1 += ")";
+                    params.push_back(param1);
+                    break;
+                }
+            }
+            param1 += ")";
+            continue;
         }
         if ((info[i] == "=") || (info[i] == "!") || (info[i] == "<") || (info[i] == ">")) {
             if (param1 != "") {
@@ -185,6 +217,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
             }
             //param1 += info[i];
             ++i;
+            //if (param1 !=)
             params.push_back(param1);
             param1 = "";
             continue;

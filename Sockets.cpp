@@ -3,7 +3,7 @@
 void *Sockets::openServerSocket(void *arg) {
     struct ServerParams *params = (struct ServerParams *) arg;
     int sockfd, newsockfd, portno, clilen;
-    char buffer[256];
+    char buffer[1024];
     struct sockaddr_in serv_addr, cli_addr;
     int n;
 
@@ -45,24 +45,27 @@ void *Sockets::openServerSocket(void *arg) {
     }
 
     /* If connection is established then start communicating */
-    bzero(buffer, 256);
     while (true) {
+        bzero(buffer, 1024);
         n = read(newsockfd, buffer, 255);
         if (n < 0) {
             perror("ERROR reading from socket");
             exit(1);
         }
+        printf(buffer);
         // split each line it get from the file to list of separate strings
         vector<double> info;
         size_t pos = 0;
         string delimiter = ",";
-        string buff = buffer;
+        string buff = "";
+        buff = buffer;
         while ((pos = buff.find(delimiter)) != string::npos) {
-            info.push_back(stoi(buff.substr(0, pos)));
+            info.push_back(stod(buff.substr(0, pos)));
             buff.erase(0, pos + delimiter.length());
         }
         info.push_back(stoi(buff.substr(0, pos)));
         params->maps->updateLocationsAndValMap(info);
+        cout << "help" << endl;
     }
 
     if (n < 0) {

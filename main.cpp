@@ -35,7 +35,7 @@ int main() {
     }
     ourFile.close();
 
-    while(true){}
+    //while(true){}
 
 
     return 0;

@@ -17,17 +17,14 @@ int ConnectCommand::execute() {
     vector<string> strings;
     vector<string> stringsConverted;
     vector<Expression*> expressions;
-    for (int i = 1; i < line.size(); ++i) {
-        strings = infToPre.convertToStrings(line[i]);
-        stringsConverted = infToPre.convertFunc(strings);
-        Expression *e = infToPre.turnToExppression(stringsConverted);
-        expressions.push_back(e);
-    }
+    strings = infToPre.convertToStrings(line[2]);
+    stringsConverted = infToPre.convertFunc(strings);
+    Expression *e = infToPre.turnToExppression(stringsConverted);
+    expressions.push_back(e);
+    string ipAddress = line[1];
+    int port = (int) expressions[0]->calculate();
 
-    string ipAddress = to_string(expressions[0]->calculate());
-    int port = (int) expressions[1]->calculate();
-
-    struct ClientParams *params;
+    struct ClientParams *params = new ClientParams();
     params->ipAddress = ipAddress;
     params->port = port;
     params->maps = maps;

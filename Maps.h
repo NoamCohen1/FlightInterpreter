@@ -70,7 +70,7 @@ public:
     }
 
     void updateLocationsAndValMap(vector<double> values) {
-        for (int i = 0; i < this->locationsAndValMap.size(); ++i) {
+        for (int i = 0; i < this->locations.size(); ++i) {
             this->locationsAndValMap.insert(pair<string, double >(this->locations[i], values[i]));
         }
     }
