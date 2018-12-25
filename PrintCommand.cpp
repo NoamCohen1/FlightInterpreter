@@ -4,7 +4,7 @@
 
 #include "PrintCommand.h"
 
-int PrintCommand::execute() {
+void PrintCommand::execute() {
     int toPrint = 0;
     string help = "";
     InfixToPrefix infToPre(this->maps);

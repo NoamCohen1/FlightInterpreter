@@ -4,7 +4,7 @@
 
 #include "IfCommand.h"
 
-int IfCommand::execute() {
+void IfCommand::execute() {
     vector<vector<string>> vectors;
     int i;
     if (findCondition(this->commands[0])) {
@@ -33,5 +33,4 @@ int IfCommand::execute() {
             }
         }
     }
-    return 0;
 }

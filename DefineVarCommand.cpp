@@ -4,7 +4,7 @@
 
 #include "DefineVarCommand.h"
 
-int DefineVarCommand::execute() {
+void DefineVarCommand::execute() {
     Command *equal = new EqualCommand();
     Command *bind = new BindCommand();
     for (int i = 0; i < this->line.size(); ++i) {

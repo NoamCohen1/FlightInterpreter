@@ -19,7 +19,7 @@ class SleepCommand : public Command {
     Maps *maps;
     vector<string> line;
 public:
-    virtual int execute();
+    virtual void execute();
 
     //static void* thread_func(void* arg);
 

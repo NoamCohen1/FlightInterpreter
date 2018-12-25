@@ -4,7 +4,7 @@
 
 #include "SleepCommand.h"
 
-int SleepCommand::execute() {
+void SleepCommand::execute() {
     double seconds = 0;
     InfixToPrefix infToPre(this->maps);
     vector<string> splitedString;

@@ -8,7 +8,6 @@
 bool FlightReader::isOperator(char s) {
     if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"' || s == '='
     || s == '>' || s == '<' || s == '!') {
-        int i;
         return true;
     } else {
         return false;

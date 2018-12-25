@@ -4,7 +4,7 @@
 
 #include "LoopCommand.h"
 
-int LoopCommand::execute() {
+void LoopCommand::execute() {
     vector<vector<string>> vectors;
     while (findCondition(this->commands[0])) {
         for (int i = 0; i < this->commands.size(); ++i) {

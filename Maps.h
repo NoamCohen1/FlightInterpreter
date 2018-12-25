@@ -14,7 +14,8 @@ using namespace std;
 
 class Maps {
     //map<string, Expression*> commandsMap;
-    int sockfd;
+    int sockfdServer;
+    int sockfdClient;
     map<string, string> bindsMap;
     map<string, double> varsValuesMap;
     map<string, double> locationsAndValMap;
@@ -42,7 +43,7 @@ public:
         locations.emplace_back("/controls/flight/aileron");
         locations.emplace_back("/controls/flight/rudder");
         locations.emplace_back("/controls/flight/flaps");
-        locations.emplace_back("/controls/engines/engine/throttle");
+        locations.emplace_back("/controls/engines/current-engine/throttle");
         locations.emplace_back("/engines/engine/rpm");
 
 
@@ -75,13 +76,22 @@ public:
         }
     }
 
-    void setSockfd(int sockfd) {
-        this->sockfd = sockfd;
+    void setSockfdClient(int sockfd) {
+        this->sockfdClient = sockfd;
     }
 
-    int getSockfd() {
-        return this->sockfd;
+    int getSockfdClient() {
+        return this->sockfdClient;
     }
+
+    void setSockfdServer(int sockfd) {
+        this->sockfdServer = sockfd;
+    }
+
+    int getSockfdServer() {
+        return this->sockfdServer;
+    }
+
 
 //    map<string, Expression*> getCommandsMap() {
 //        return commandsMap;

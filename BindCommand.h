@@ -25,7 +25,7 @@ class BindCommand : public Command {
     map<string, double> varsMap;
     vector<string> line;
 public:
-    virtual int execute();
+    virtual void execute();
 
     virtual void setParams(vector<string> line, Maps *maps) {
         this->line = line;

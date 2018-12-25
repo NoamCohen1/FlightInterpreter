@@ -25,7 +25,7 @@ class EqualCommand : public Command {
     map<string, double> varsMap;
     vector<string> line;
 public:
-    virtual int execute();
+    virtual void execute();
 
     void setValue(string newValue);
 

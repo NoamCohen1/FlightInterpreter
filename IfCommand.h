@@ -19,7 +19,7 @@ public:
         this->maps = maps;
     }
 
-    virtual int execute();
+    virtual void execute();
 
     virtual void setParams(vector<string> line, Maps *maps) {}
 };

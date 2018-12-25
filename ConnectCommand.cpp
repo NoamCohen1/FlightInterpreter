@@ -9,7 +9,7 @@
 //    serverS->openClientSocket(arg);
 //}
 
-int ConnectCommand::execute() {
+void ConnectCommand::execute() {
     if (line.size() != 3) {
         throw "The Number of Arguments is Not Correct";
     }
@@ -32,5 +32,4 @@ int ConnectCommand::execute() {
     pthread_t trid;
     pthread_create(&trid, nullptr, Sockets::openClientSocket, params);
     //pthread_join(&trid, &params);
-    return 0;
 }

@@ -17,7 +17,7 @@ protected:
     Maps *maps;
     //map<string, Expression*> commandsMap;
 public:
-    virtual int execute() = 0;
+    virtual void execute() = 0;
 
     virtual void setParams(vector<string> line, Maps *maps) {
         this->maps = maps;
