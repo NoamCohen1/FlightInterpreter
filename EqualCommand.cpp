@@ -8,7 +8,17 @@ void EqualCommand::execute() {
     string s = this->line[2];
     double d = 0;
     if ((this->maps->getVarsValuesMap().count(this->line[0])) > 0) {
-        d = this->maps->getVarsValuesMap().find(s)->second;
+        if (this->maps->getVarsValuesMap().count(s) > 0) {
+            d = this->maps->getVarsValuesMap().find(s)->second;
+        } else {
+            InfixToPrefix infToPre(this->maps);
+            vector<string> strings;
+            vector<string> stringsConverted;
+            strings = infToPre.convertToStrings(s);
+            stringsConverted = infToPre.convertFunc(strings);
+            Expression *e = infToPre.turnToExppression(stringsConverted);
+            d = e->calculate();
+        }
         this->maps->updateVarsValuesMap(this->line[0], d);
     } else {
         InfixToPrefix infToPre(this->maps);
@@ -20,6 +30,14 @@ void EqualCommand::execute() {
         d = e->calculate();
         this->maps->updateVarsValuesMap(this->line[0], d);
     }
+//    InfixToPrefix infToPre(this->maps);
+//    vector<string> strings;
+//    vector<string> stringsConverted;
+//    strings = infToPre.convertToStrings(s);
+//    stringsConverted = infToPre.convertFunc(strings);
+//    Expression *e = infToPre.turnToExppression(stringsConverted);
+//    d = e->calculate();
+//    this->maps->updateVarsValuesMap(this->line[0], d);
     string newValue;
     if ((this->maps->getBindsMap().count(this->line[0])) > 0) {
         newValue = "set " + this->maps->getBindsMap().find(this->line[0])->second + " " + to_string(d) + "\r\n";

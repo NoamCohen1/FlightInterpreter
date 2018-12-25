@@ -5,11 +5,19 @@
 #include "Maps.h"
 
 void Maps::updateVarsValuesMap(string s, double d) {
-    this->varsValuesMap.insert(pair<string, double> (s, d));
+    if (this->varsValuesMap.count(s) > 0) {
+        this->varsValuesMap.find(s)->second = d;
+    } else {
+        this->varsValuesMap.insert(pair<string, double> (s, d));
+    }
 }
 
 void Maps::updateBindsMap(string var, string path) {
-    this->bindsMap.insert(pair <string, string> (var, path));
+    if (this->bindsMap.count(var) > 0) {
+        this->bindsMap.find(var)->second = path;
+    } else {
+        this->bindsMap.insert(pair <string, string> (var, path));
+    }
 }
 
 vector<string> &Maps::replaceVarByValue(vector<string> &origin) {
@@ -23,6 +31,18 @@ vector<string> &Maps::replaceVarByValue(vector<string> &origin) {
             } else {
                 origin[i] = to_string(this->varsValuesMap.find(origin[i])->second);
             }
+        }
+    }
+    return origin;
+}
+
+vector<string> &Maps::replaceVarByValueForPrint(vector<string> &origin) {
+    //we will go over the vector and replace the variables by there values
+    for (int i = 0; i < origin.size(); ++i) {
+        //we will check if it is in the map
+        if(this->varsValuesMap.count(origin[i]) > 0) {
+            //swap
+            origin[i] = to_string(this->varsValuesMap.find(origin[i])->second);
         }
     }
     return origin;
