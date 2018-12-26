@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/17/18.
-//
-
 #ifndef INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
 #define INTERPRETERFLIGHT_OPENSERVERCOMMAND_H
 
@@ -14,12 +10,6 @@
 #include "Maps.h"
 
 using namespace std;
-
-//struct ServerParams {
-//    int port;
-//    int Hz;
-//    Maps maps;
-//};
 
 class OpenServerCommand : public Command {
     Maps *maps;

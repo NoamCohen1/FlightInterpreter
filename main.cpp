@@ -6,26 +6,13 @@
 #include <regex>
 
 
-int main() {
-   // FlightReader fr;
-//    fr.lexer("openDataServer 5400 10");
-
-//    FlightReader fr;
-//    fr.lexer("connect 127.0.0.1 5402");
-
-
-//    Sockets* s = new Sockets();
-//    s->func1();
-
-//    while(true){}
-//    return 0;
-
-
+int main(int argc, char *argv[]) {
     ifstream ourFile;
     Maps *maps = new Maps();
+    maps->counter++;
     string buffer = "";
     FlightReader flightReader(maps);
-    ourFile.open("flightFile.txt", ifstream::in | ifstream::app);
+    ourFile.open(argv[1], ifstream::in | ifstream::app);
     if (!ourFile) {
         throw "Failed Opening File";
     }
@@ -33,68 +20,15 @@ int main() {
     while (getline(ourFile, buffer)) {
         flightReader.lexer(buffer);
     }
+    flightReader.exit();
     ourFile.close();
 
-    while(true){}
-    close(maps->getSockfdClient());
-    close(maps->getSockfdServer());
-    return 0;
-
-
-
-
-//    InfixToPrefix sh;
-//    //
-//    vector<string> s  ;
-//    s.push_back("(");
-//    s.push_back("4");
-//    s.push_back("-");
-//    s.push_back("3");
-//    s.push_back(")");
-//    s.push_back("*");
-//    s.push_back("(");
-//    s.push_back("10");
-//    s.push_back("/");
-//    s.push_back("2");
-//    s.push_back(")");
-//    vector<string> g = sh.convertFunc(s);
-////    for (int i = 0; i < g.size(); ++i){
-////        //cout<<g[i];
-////    }
-//    Expression*e = sh.turnToExppression(g);
-//    cout<<e->calculate()<<endl;
-
-
-// Target sequence
-    //string s = "GeeksForGeeksI am Geeksulooking for GeeksForGeeks "
-    //           "articles";
-
-
-//    string s = "OpenDataServer 5400 10";
-//    regex v("[0-9]*\.");
-
-    //regex v("[-+]?[0-9]\.?[0-9]+[\/\+\-\])+([-+]?[0-9]*\.?[0-9]+");
-    // An object of regex for pattern to be searched
-    //regex r("Geek[a-zA-Z]+");
-
-    // flag type for determining the matching behavior
-    // here it is for matches on 'string' objects
-//    smatch m;
-
-    // regex_search() for searching the regex pattern
-    // 'r' in the string 's'. 'm' is flag for determining
-    // matching behavior.
-
-//    while (regex_search(s, m, v)) {
-//        // for each loop
-//        for (auto x : m) {
-//            cout << x << "\n";
-//        }
-//        s = m.suffix();
-//    }
-
-
+    //cout << maps->counter << endl;
+    if (maps->counter == 1) {
+        delete maps;
+    }   else    {
+        maps->counter--;
+    }
 
     return 0;
-
 }

@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/19/18.
-//
-
 #ifndef INTERPRETERFLIGHT_MAPS_H
 #define INTERPRETERFLIGHT_MAPS_H
 
@@ -20,8 +16,10 @@ class Maps {
     map<string, double> varsValuesMap;
     map<string, double> locationsAndValMap;
     vector<string> locations;
-    //vector<double> values;
+    bool socketClosed = false;
 public:
+    //vector<double> values;
+    int counter = 0;
     Maps() {
         locations.emplace_back("/instrumentation/airspeed-indicator/indicated-speed-kt");
         locations.emplace_back("/instrumentation/altimeter/indicated-altitude-ft");
@@ -48,6 +46,13 @@ public:
         locations.emplace_back("/engines/engine/rpm");
     }
 
+    bool getStateOfSockets() const {
+        return this->socketClosed;
+    }
+
+    void setStateOfSockets(bool state) {
+        this->socketClosed = state;
+    }
 
     void setLocationsAndValMap() {
         //this->locationsAndValMap.insert(pair<string, double >(,0));

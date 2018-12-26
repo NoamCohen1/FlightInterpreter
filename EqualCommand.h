@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/19/18.
-//
-
 #ifndef INTERPRETERFLIGHT_EQUALCOMMAND_H
 #define INTERPRETERFLIGHT_EQUALCOMMAND_H
 

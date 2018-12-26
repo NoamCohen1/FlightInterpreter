@@ -1,13 +1,9 @@
-//
-// Created by noam on 12/13/18.
-//
-
 #include "FlightReader.h"
 #include <regex>
 
 bool FlightReader::isOperator(char s) {
     if (s == '+' || s == '-' || s == '/' || s == '*' || s == '(' || s == ')' || s == '"' || s == '='
-    || s == '>' || s == '<' || s == '!') {
+        || s == '>' || s == '<' || s == '!') {
         return true;
     } else {
         return false;
@@ -15,17 +11,20 @@ bool FlightReader::isOperator(char s) {
 }
 
 void FlightReader::lexer(string line) {
+    // if it the command Enterc
     if (line == "Enterc") {
         vector<string> temp;
         temp.push_back(line);
         Expression *c = commandsMap.find(line)->second;
         dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(temp, this->maps);
         c->calculate();
+        return;
     }
     string buffer = "";
     string space = " ";
     bool sawComma = false;
     bool sawMinus = false;
+    // pass on the string and organize it with spaces between each argument
     for (int i = 0; i < line.size(); ++i) {
         string s = to_string(line.at(i));
         if (line.at(i) == '{') {
@@ -34,7 +33,9 @@ void FlightReader::lexer(string line) {
         if (line.at(i) == '}') {
             howManyBraces--;
         }
+        // if it is an operator
         if ((isOperator(line.at(i))) || (line.at(i) == '{') || (line.at(i) == '}')) {
+            // if we saw a ','
             if (sawComma) {
                 if ((i != 0) && (buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
                     buffer += space;
@@ -47,6 +48,7 @@ void FlightReader::lexer(string line) {
                 }
 
             }
+            //if we are after the space
             if ((i != 0) && (buffer[buffer.size() - 1] != ' ') && (line.at(i - 1) != ' ')) {
                 buffer += space;
             }
@@ -234,41 +236,30 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
     return params;
 }
 
-//void FlightReader::conditionInCondition(vector<vector<string>> commands) {
-//    int howManyBraces = 0;
-//    for (int i = 0; i < commands.size(); ++i) {
-//        if (commands[i][0] == "while") {
-//
-//        }
-//    }
-//    if (result[0] == "while") {
-//        this->inWhile = true;
-//        howManyBraces++;
-//    }
-//    if (this->inWhile) {
-//        this->ifOrWhileCommands.push_back(result);
-//        if (howManyBraces == 0) {
-//            ConditionParser *lp;
-//            lp->conditionInCondition(ifOrWhileCommands);
-//            ifOrWhileCommands.clear();
-//            this->inWhile = false;
-//        }
-//    } else {
-//        parser(result);
-//    }
-//}
-
 void FlightReader::parser(vector<string> info) {
-    Expression *c = commandsMap.find(info[0])->second;
-    if (c == nullptr) {
-        string s = this->maps->getBindsMap().find(info[0])->second;
-        if (s != "") {
+    if (commandsMap.count(info[0]) <= 0) {
+        //string s = this->maps->getBindsMap().find(info[0])->second;
+        if (this->maps->getBindsMap().count(info[0]) > 0) {
             Expression *c = commandsMap.find(info[1])->second;
             dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);
             c->calculate();
         }
     } else {
+        Expression *c = commandsMap.find(info[0])->second;
         dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);
         c->calculate();
     }
+}
+
+void FlightReader::exit() {
+    //close the sockets
+    close(maps->getSockfdClient());
+    close(maps->getSockfdServer());
+    maps->setStateOfSockets(false);
+    //go over the maps and clear them
+    map<string, Expression *>::iterator iterator;
+    for (iterator = commandsMap.begin(); iterator != commandsMap.end(); ++iterator) {
+        delete(iterator->second);
+    }
+    commandsMap.clear();
 }

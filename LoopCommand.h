@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/18/18.
-//
-
 #ifndef INTERPRETERFLIGHT_LOOPCOMMAND_H
 #define INTERPRETERFLIGHT_LOOPCOMMAND_H
 
@@ -24,6 +20,5 @@ public:
 
     virtual void setParams(vector<string> line, Maps *maps) {}
 };
-
 
 #endif //INTERPRETERFLIGHT_LOOPCOMMAND_H

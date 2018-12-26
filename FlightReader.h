@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/13/18.
-//
-
 #ifndef INTERPRETERFLIGHT_FLIGHTREADER_H
 #define INTERPRETERFLIGHT_FLIGHTREADER_H
 
@@ -62,8 +58,7 @@ public:
 
     void parser(vector<string> info);
 
-//    void conditionInCondition(vector<vector<string>> commands);
-
+    void exit();
 };
 
 

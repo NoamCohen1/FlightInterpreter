@@ -1,6 +1,5 @@
 #include "Sockets.h"
 
-
 void *Sockets::openServerSocket(void *arg) {
     struct ServerParams *params = (struct ServerParams *) arg;
     char buffer[256];
@@ -9,8 +8,9 @@ void *Sockets::openServerSocket(void *arg) {
     string buff;
     string leftOvers;
 
+    params->maps->counter++;
     /* If connection is established then start communicating */
-    while (true) {
+    while (params->maps->getStateOfSockets()) {
         bzero(buffer, 256);
         n = read(params->maps->getSockfdServer(), buffer, 255);
         if (n < 0) {
@@ -40,6 +40,12 @@ void *Sockets::openServerSocket(void *arg) {
         //cout << "help" << endl;
         buff += leftOvers;
         leftOvers = "";
+    }
+    //cout << params->maps->counter << endl;
+    if (params->maps->counter == 1) {
+        delete params->maps;
+    }   else    {
+        params->maps->counter--;
     }
 }
 

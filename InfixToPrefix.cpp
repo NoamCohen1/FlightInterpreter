@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/16/18.
-//
-
 #include "InfixToPrefix.h"
 
 int InfixToPrefix::getPriority(string str)

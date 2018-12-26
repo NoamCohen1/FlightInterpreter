@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/16/18.
-//
-
 #ifndef INTERPRETERFLIGHT_INFIXTOPREFIX_H
 #define INTERPRETERFLIGHT_INFIXTOPREFIX_H
 

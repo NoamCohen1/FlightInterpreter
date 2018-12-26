@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/18/18.
-//
-
 #ifndef INTERPRETERFLIGHT_CONNECTCOMMAND_H
 #define INTERPRETERFLIGHT_CONNECTCOMMAND_H
 
@@ -14,12 +10,6 @@
 #include "Maps.h"
 
 using namespace std;
-
-//struct ClientParams {
-//    string ipAddress;
-//    int port;
-//    Maps maps;
-//};
 
 class ConnectCommand : public Command {
     Maps *maps;

@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/18/18.
-//
-
 #ifndef INTERPRETERFLIGHT_SOCKETS_H
 #define INTERPRETERFLIGHT_SOCKETS_H
 
@@ -38,28 +34,11 @@ struct ServerParams {
 };
 
 class Sockets {
-    //struct sockaddr_in planeSocket;
-    //struct sockaddr_in clientSocket;
     map<string, string> varPlaces;
-    //int id;
-    //Maps maps;
 public:
-//    Sockets(){
-//        this->planeSocket.sin_addr.s_addr = 0;
-//        this->planeSocket.sin_family = 0;
-//        this->planeSocket.sin_port = 0;
-//        for(int i=0;i<8;i++) {
-//            this->planeSocket.sin_zero[i] = 0;
-//        }
-//    }
-
     static void *openServerSocket(void *arg);
 
     static void *openClientSocket(void *arg);
-
-    //void *updateData(void *arg);
-    //void func1();
 };
-
 
 #endif //INTERPRETERFLIGHT_SOCKETS_H

@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/13/18.
-//
-
 #ifndef INTERPRETERFLIGHT_NUMBER_H
 #define INTERPRETERFLIGHT_NUMBER_H
 

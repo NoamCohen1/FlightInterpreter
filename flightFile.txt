@@ -19,8 +19,6 @@ rudder = (h0 - heading)/20
 aileron = - roll / 70
 elevator = pitch / 50
 print alt
-print breaks
-print airspeed
 sleep 500
 }
 print "done"

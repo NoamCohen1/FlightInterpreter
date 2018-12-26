@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/20/18.
-//
-
 #ifndef INTERPRETERFLIGHT_PRINTCOMMAND_H
 #define INTERPRETERFLIGHT_PRINTCOMMAND_H
 

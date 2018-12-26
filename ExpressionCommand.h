@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/17/18.
-//
-
 #ifndef INTERPRETERFLIGHT_EXPRESSIONCOMMAND_H
 #define INTERPRETERFLIGHT_EXPRESSIONCOMMAND_H
 
@@ -20,6 +16,10 @@ public:
     }
 
     virtual double calculate();
+
+    ~ExpressionCommand() {
+        delete command;
+    }
 };
 
 

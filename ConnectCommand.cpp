@@ -1,13 +1,4 @@
-//
-// Created by noam on 12/18/18.
-//
-
 #include "ConnectCommand.h"
-
-//void* ConnectCommand::thread_func(void* arg) {
-//    Sockets* serverS;
-//    serverS->openClientSocket(arg);
-//}
 
 void ConnectCommand::execute() {
     if (line.size() != 3) {

@@ -1,7 +1,3 @@
-//
-// Created by gal on 12/19/18.
-//
-
 #include "Maps.h"
 
 void Maps::updateVarsValuesMap(string s, double d) {

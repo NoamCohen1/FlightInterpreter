@@ -1,13 +1,4 @@
-//
-// Created by gal on 12/17/18.
-//
-
 #include "OpenServerCommand.h"
-
-//void* OpenServerCommand::thread_func(void* arg) {
-//    Sockets* serverS;
-//    serverS->openServerSocket(arg);
-//}
 
 void OpenServerCommand::execute() {
     if (line.size() != 3) {
@@ -74,6 +65,7 @@ void OpenServerCommand::execute() {
         exit(1);
     }
     maps->setSockfdServer(newsockfd);
+    maps->setStateOfSockets(true);
 
     pthread_t trid;
     pthread_create(&trid, nullptr, Sockets::openServerSocket, params);

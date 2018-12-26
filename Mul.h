@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/13/18.
-//
-
 #ifndef INTERPRETERFLIGHT_MUL_H
 #define INTERPRETERFLIGHT_MUL_H
 

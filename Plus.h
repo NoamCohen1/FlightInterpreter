@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/13/18.
-//
-
 #ifndef INTERPRETERFLIGHT_PLUS_H
 #define INTERPRETERFLIGHT_PLUS_H
 
@@ -13,6 +9,5 @@ public:
 
     virtual double calculate();
 };
-
 
 #endif //INTERPRETERFLIGHT_PLUS_H

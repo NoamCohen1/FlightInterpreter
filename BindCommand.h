@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/20/18.
-//
-
 #ifndef INTERPRETERFLIGHT_BINDCOMMAND_H
 #define INTERPRETERFLIGHT_BINDCOMMAND_H
 

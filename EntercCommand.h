@@ -1,7 +1,3 @@
-//
-// Created by noam on 12/26/18.
-//
-
 #ifndef INTERPRETERFLIGHT_ENTERCCOMMAND_H
 #define INTERPRETERFLIGHT_ENTERCCOMMAND_H
 
