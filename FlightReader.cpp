@@ -15,6 +15,13 @@ bool FlightReader::isOperator(char s) {
 }
 
 void FlightReader::lexer(string line) {
+    if (line == "Enterc") {
+        vector<string> temp;
+        temp.push_back(line);
+        Expression *c = commandsMap.find(line)->second;
+        dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(temp, this->maps);
+        c->calculate();
+    }
     string buffer = "";
     string space = " ";
     bool sawComma = false;
