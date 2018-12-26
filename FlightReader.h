@@ -22,6 +22,7 @@
 #include "PrintCommand.h"
 #include "EqualCommand.h"
 #include "Maps.h"
+#include "EntercCommand.h"
 
 using namespace std;
 
@@ -48,10 +49,8 @@ public:
                                                              new ExpressionCommand(new PrintCommand())));
         this->commandsMap.insert(pair <string, Expression*> ("sleep",
                                                              new ExpressionCommand(new SleepCommand())));
-//        this->commandsMap.insert(pair <string, Expression*> ("while",
-//                                                             new ExpressionCommand(new ConditionParser())));
-//        this->commandsMap.insert(pair <string, Expression*> ("if",
-//                                                             new ExpressionCommand(new SleepCommand())));
+        this->commandsMap.insert(pair <string, Expression*> ("Enterc",
+                                                             new ExpressionCommand(new EntercCommand())));
         this->maps = maps;
     }
 

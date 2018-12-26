@@ -108,5 +108,4 @@ public:
     vector<string>& replaceVarByValueForPrint(vector<string> &origin);
 };
 
-
 #endif //INTERPRETERFLIGHT_MAPS_H

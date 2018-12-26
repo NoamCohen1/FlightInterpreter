@@ -76,10 +76,13 @@ vector<string> InfixToPrefix::convertFunc(vector<string> stringInfix){
 
 Expression* InfixToPrefix::turnToExppression(vector<string> postfixString){
     stack<Expression*> stack;
+    Expression* ex;
 
     for (int i = 0; i < postfixString.size(); ++i){
-        if(!isOperator(postfixString[i][0])){
-            stack.push(new Number(stod(postfixString[i])));
+        if(!isOperator(postfixString[i][0])) {
+            ex = new Number(stod(postfixString[i]));
+            stack.push(ex);
+            toBeDeleted.push_back(ex);
         }
         else {
             Expression* right = stack.top();
@@ -88,25 +91,30 @@ Expression* InfixToPrefix::turnToExppression(vector<string> postfixString){
             stack.pop();
             switch (postfixString[i][0]){
                 case '+':
-                    stack.push(new Plus(left,right)) ;
+                    ex = new Plus(left,right);
+                    stack.push(ex);
+                    toBeDeleted.push_back(ex);
                     break;
                 case '-':
-                    stack.push(new Minus(left,right)) ;
-                    if (postfixString[i][0] == '-') {
-                        //stack.push(new Number(0.0));
-                    }
+                    ex = new Minus(left,right);
+                    stack.push(ex);
+                    toBeDeleted.push_back(ex);
                     break;
                 case '/':
-                    stack.push(new Div(left,right)) ;
+                    ex = new Div(left,right);
+                    stack.push(ex);
+                    toBeDeleted.push_back(ex);
                     break;
                 case '*':
-                    stack.push(new Mul(left,right)) ;
+                    ex = new Mul(left,right);
+                    stack.push(ex);
+                    toBeDeleted.push_back(ex);
                     break;
             }
-
         }
     }
     Expression* result = stack.top();
+    //toBeDeleted.push_back(result);
     return result;
 }
 

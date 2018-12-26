@@ -19,4 +19,6 @@ void DefineVarCommand::execute() {
             }
         }
     }
+    delete(equal);
+    delete(bind);
 }

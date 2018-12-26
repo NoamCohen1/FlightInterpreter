@@ -7,38 +7,18 @@
 void EqualCommand::execute() {
     string s = this->line[2];
     double d = 0;
-    if ((this->maps->getVarsValuesMap().count(this->line[0])) > 0) {
-        if (this->maps->getVarsValuesMap().count(s) > 0) {
-            d = this->maps->getVarsValuesMap().find(s)->second;
-        } else {
-            InfixToPrefix infToPre(this->maps);
-            vector<string> strings;
-            vector<string> stringsConverted;
-            strings = infToPre.convertToStrings(s);
-            stringsConverted = infToPre.convertFunc(strings);
-            Expression *e = infToPre.turnToExppression(stringsConverted);
-            d = e->calculate();
-        }
-        this->maps->updateVarsValuesMap(this->line[0], d);
-    } else {
-        InfixToPrefix infToPre(this->maps);
-        vector<string> strings;
-        vector<string> stringsConverted;
-        strings = infToPre.convertToStrings(s);
-        stringsConverted = infToPre.convertFunc(strings);
-        Expression *e = infToPre.turnToExppression(stringsConverted);
-        d = e->calculate();
-        this->maps->updateVarsValuesMap(this->line[0], d);
-    }
-//    InfixToPrefix infToPre(this->maps);
-//    vector<string> strings;
-//    vector<string> stringsConverted;
-//    strings = infToPre.convertToStrings(s);
-//    stringsConverted = infToPre.convertFunc(strings);
-//    Expression *e = infToPre.turnToExppression(stringsConverted);
-//    d = e->calculate();
-//    this->maps->updateVarsValuesMap(this->line[0], d);
+    // calculate the value
+    InfixToPrefix infToPre(this->maps);
+    vector<string> strings;
+    vector<string> stringsConverted;
+    strings = infToPre.convertToStrings(s);
+    stringsConverted = infToPre.convertFunc(strings);
+    Expression *e = infToPre.turnToExppression(stringsConverted);
+    d = e->calculate();
+    // replace the var value in the map to the new value or add a new var and value to the map
+    this->maps->updateVarsValuesMap(this->line[0], d);
     string newValue;
+    // write the new value to the server
     if ((this->maps->getBindsMap().count(this->line[0])) > 0) {
         newValue = "set " + this->maps->getBindsMap().find(this->line[0])->second + " " + to_string(d) + "\r\n";
         this->setValue(newValue);

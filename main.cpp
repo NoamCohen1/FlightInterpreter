@@ -36,8 +36,8 @@ int main() {
     ourFile.close();
 
     while(true){}
-
-
+    close(maps->getSockfdClient());
+    close(maps->getSockfdServer());
     return 0;
 
 

@@ -22,6 +22,7 @@ using namespace std;
 
 class InfixToPrefix{
     Maps *maps;
+    vector<Expression*> toBeDeleted;
 public:
     InfixToPrefix(Maps *maps) {
         this->maps = maps;
@@ -36,6 +37,12 @@ public:
     bool isOperator(char c);
 
     vector<string> convertToStrings(string str);
+
+    ~InfixToPrefix() {
+        for (auto x : this->toBeDeleted) {
+            delete(x);
+        }
+    }
 };
 
 #endif //INTERPRETERFLIGHT_INFIXTOPREFIX_H
