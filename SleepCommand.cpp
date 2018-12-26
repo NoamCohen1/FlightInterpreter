@@ -13,5 +13,5 @@ void SleepCommand::execute() {
     result = infToPre.convertFunc(splitedString);
     Expression *e = infToPre.turnToExppression(result);
     seconds = (e->calculate()) * 1000;
-    sleep(seconds);
+    usleep(seconds);
 }
