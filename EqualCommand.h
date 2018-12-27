@@ -15,6 +15,7 @@
 #include "InfixToPrefix.h"
 #include "Command.h"
 #include "Maps.h"
+#include "Sockets.h"
 
 class EqualCommand : public Command {
     Maps *maps;

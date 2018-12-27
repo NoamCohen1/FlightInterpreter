@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
     ifstream ourFile;
     Maps *maps = new Maps();
-    maps->counter++;
+    maps->incCounter();
     string buffer = "";
     FlightReader flightReader(maps);
     ourFile.open(argv[1], ifstream::in | ifstream::app);
@@ -24,10 +24,9 @@ int main(int argc, char *argv[]) {
     ourFile.close();
 
     //cout << maps->counter << endl;
-    if (maps->counter == 1) {
+    maps->decCounter();
+    if (maps->getCounter() == 0)    {
         delete maps;
-    }   else    {
-        maps->counter--;
     }
 
     return 0;

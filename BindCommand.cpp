@@ -9,6 +9,9 @@ void BindCommand::execute() {
         // if the value is a path
         this->maps->updateBindsMap(line[1], line[4]);
     }
+
+    // this->maps->updateBindsMap(line[1], line[4]);
+
     // if this path is in the xml we update the value of the var
     if (this->maps->getLocationsAndValMap().count(line[4]) > 0) {
         this->maps->updateVarsValuesMap(line[1], this->maps->getValueFromLocation(line[4]));

@@ -8,7 +8,7 @@ void *Sockets::openServerSocket(void *arg) {
     string buff;
     string leftOvers;
 
-    params->maps->counter++;
+    params->maps->incCounter();
     /* If connection is established then start communicating */
     while (params->maps->getStateOfSockets()) {
         bzero(buffer, 256);
@@ -36,16 +36,16 @@ void *Sockets::openServerSocket(void *arg) {
         }
         info.push_back(stoi(buff.substr(0, pos)));
         buff = "";
+        params->maps->lock();
         params->maps->updateLocationsAndValMap(info);
+        params->maps->unlock();
         //cout << "help" << endl;
         buff += leftOvers;
         leftOvers = "";
     }
-    //cout << params->maps->counter << endl;
-    if (params->maps->counter == 1) {
+    params->maps->decCounter();
+    if (params->maps->getCounter() == 0)    {
         delete params->maps;
-    }   else    {
-        params->maps->counter--;
     }
 }
 
@@ -87,37 +87,5 @@ void *Sockets::openClientSocket(void *arg) {
     return 0;
 }
 
-
-//void *Sockets::updateData(void *arg) {
-//    struct ClientParams *params = (struct ClientParams *) arg;
-//    char buffer[256];
-//    int n;
-//    /* Now ask for a message from the user, this message
-//       * will be read by server
-//    */
-//
-//    printf("Please enter the message: ");
-//    bzero(buffer, 256);
-//    fgets(buffer, 255, stdin);
-//
-////    /* Send message to the server */
-////    n = write(params->maps.getSockfd(), buffer, strlen(buffer));
-////
-////    if (n < 0) {
-////        perror("ERROR writing to socket");
-////        exit(1);
-////    }
-//
-//    /* Now read server response */
-//    bzero(buffer, 256);
-//    n = read(params->maps.getSockfd(), buffer, 255);
-//
-//    if (n < 0) {
-//        perror("ERROR reading from socket");
-//        exit(1);
-//    }
-//
-//    printf("%s\n", buffer);
-//}
 
 

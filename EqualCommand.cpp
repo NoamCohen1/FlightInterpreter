@@ -1,5 +1,4 @@
 #include "EqualCommand.h"
-
 void EqualCommand::execute() {
     string s = this->line[2];
     double d = 0;
@@ -25,8 +24,7 @@ void EqualCommand::setValue(string newValue) {
     int sockfd = this->maps->getSockfdClient();
     char *c = const_cast<char*>(newValue.c_str());
     /* Send message to the server */
-    int n = write(sockfd, c, strlen(c));
-
+    int n = static_cast<int>(write(sockfd, c, strlen(c)));
     if (n < 0) {
         perror("ERROR writing to socket");
         exit(1);

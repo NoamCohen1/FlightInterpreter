@@ -10,17 +10,53 @@ using namespace std;
 
 class Maps {
     //map<string, Expression*> commandsMap;
-    int sockfdServer;
-    int sockfdClient;
+    int sockfdServer{};
+    int sockfdClient{};
     map<string, string> bindsMap;
     map<string, double> varsValuesMap;
     map<string, double> locationsAndValMap;
     vector<string> locations;
     bool socketClosed = false;
-public:
     //vector<double> values;
     int counter = 0;
+    pthread_mutex_t mutex;
+    pthread_mutex_t globalMutex;
+public:
+    void incCounter()    {
+        pthread_mutex_lock(&mutex);
+        counter++;
+        pthread_mutex_unlock(&mutex);
+    }
+
+    void decCounter()
+    {
+        pthread_mutex_lock(&mutex);
+        counter--;
+        pthread_mutex_unlock(&mutex);
+    }
+
+    int getCounter(){
+        int temp;
+        pthread_mutex_lock(&mutex);
+        temp = counter;
+        pthread_mutex_unlock(&mutex);
+        return temp;
+    }
+
+    void lock() {
+        pthread_mutex_lock(&globalMutex);
+    }
+
+    void unlock()   {
+        pthread_mutex_unlock(&globalMutex);
+    }
+    ~Maps() {
+        pthread_mutex_destroy(&mutex);
+        pthread_mutex_destroy(&globalMutex);
+    }
     Maps() {
+        pthread_mutex_init(&mutex, nullptr);
+        pthread_mutex_init(&globalMutex, nullptr);
         locations.emplace_back("/instrumentation/airspeed-indicator/indicated-speed-kt");
         locations.emplace_back("/instrumentation/altimeter/indicated-altitude-ft");
         locations.emplace_back("/instrumentation/altimeter/pressure-alt-ft");
@@ -55,7 +91,11 @@ public:
     }
 
     void setLocationsAndValMap() {
-        //this->locationsAndValMap.insert(pair<string, double >(,0));
+        this->lock();
+        for (int i = 0; i < locations.size(); ++i) {
+            this->locationsAndValMap.insert(pair<string, double >(locations[i],0));
+        }
+        this->unlock();
     }
 
     void updateLocationsAndValMap(vector<double> values) {
@@ -101,7 +141,10 @@ public:
     }
 
     double getValueFromLocation(string location) {
-        return this->locationsAndValMap.find(location)->second;
+        this->lock();
+        double i = this->locationsAndValMap.find(location)->second;
+        this->unlock();
+        return i;
     }
 
     void updateVarsValuesMap(string s, double d);

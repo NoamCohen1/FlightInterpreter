@@ -56,6 +56,7 @@ void FlightReader::lexer(string line) {
             if ((i != (line.size() - 1)) && (line.at(i + 1) != ' ')) {
                 buffer += space;
             }
+            // if we have the , and - after we add (0-value)
         } else if (line.at(i) == ',') {
             if ((buffer[buffer.size() - 1] != ' ') && (line.at(i + 1) != ' ')) {
                 buffer += space;
@@ -64,13 +65,13 @@ void FlightReader::lexer(string line) {
                 buffer += '(' + space + '0';
                 sawComma = true;
             }
+            // if there is tab
         } else if (to_string(line.at(i)) == "9") {
             buffer += space;
         } else {
             buffer += line.at(i);
         }
     }
-    //cout << buffer << endl;
 
     // split each line it get from the file to list of separate strings
     vector<string> info;
@@ -88,6 +89,7 @@ void FlightReader::lexer(string line) {
     vector<string> result;
     if (info.size() != 0) {
         result = uniteParam(info);
+        // if we have while or if we read all the lines after and make a vector of vectors of lines
         if ((result[0] == "while") && (!(this->inIf)) && (!(this->notFirstTime))) {
             this->inWhile = true;
         }
@@ -143,6 +145,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
                     ++i;
                     continue;
                 }
+                // if we are at the end we push it
             } else if ((i == (info.size() - 1)) && (info[i - 1] == ")")) {
                 params.push_back(param1);
                 param1 = "";
@@ -189,6 +192,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
             param1 += ")";
             continue;
         }
+        // split
         if ((info[i] == "=") || (info[i] == "!") || (info[i] == "<") || (info[i] == ">")) {
             if (param1 != "") {
                 params.push_back(param1);
@@ -201,6 +205,7 @@ vector<string> FlightReader::uniteParam(vector<string> info) {
         if ((info[i] != "(") && (info[i] != "\"")) {
             param1 += info[i];
         }
+        // if there is (()) we count how many brackets
         if (info[i] == "(") {
             howManyBrackets++;
             param1 += info[i];
@@ -245,6 +250,7 @@ void FlightReader::parser(vector<string> info) {
             c->calculate();
         }
     } else {
+        // we make a new command by the first word
         Expression *c = commandsMap.find(info[0])->second;
         dynamic_cast<ExpressionCommand *> (c)->getCommand()->setParams(info, this->maps);
         c->calculate();
@@ -259,7 +265,7 @@ void FlightReader::exit() {
     //go over the maps and clear them
     map<string, Expression *>::iterator iterator;
     for (iterator = commandsMap.begin(); iterator != commandsMap.end(); ++iterator) {
-        delete(iterator->second);
+        delete (iterator->second);
     }
     commandsMap.clear();
 }
